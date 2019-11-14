@@ -16,6 +16,7 @@ Page({
     })
   },
   onLoad: function () {
+    /* http测试
     wx.request({
       url: 'http://adfs.xftm.com:8767/XftmApp/test/schedule',
       method: 'GET',
@@ -27,6 +28,7 @@ Page({
         console.log(e)
       }
     })
+    */
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
