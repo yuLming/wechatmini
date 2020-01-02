@@ -1,0 +1,34 @@
+<view class="app-page">
+  <view class="page-content">
+
+    <form bindsubmit="nextStep">
+
+
+
+
+      <view class="list-block" style="width:80%;margin-left:10%;margin-top:40%;">
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label" style="float:left;padding-right:5%;">{{name}}:</view>
+            <view class="item-input">
+              <input name="userName" type="text" value="{{v}}" style="border-radius:3px;border:1px solid #eee;hight:30px;"></input>
+            </view>
+          </view>
+        </view>
+
+
+
+
+
+
+
+
+
+
+        <view class="content-block" style="margin:35px 0 5px">
+          <button class="button button-big jmed-active" formType="submit" style="width: 70%;margin:0 auto" >下一步</button>
+        </view>
+      </view>
+    </form>
+  </view>
+</view>

@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -22,8 +22,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.0",
-	"appid": "wx0917fd97b249b6ba",
-	"projectname": "miniprogram-2",
+	"appid": "wxc114bcafbda23fc5",
+	"projectname": "wechatmini",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

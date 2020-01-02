@@ -1,7 +1,12 @@
 {
   "pages": [
+    "pages/sweep/sweep",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/login/login",
+    
+    "pages/logs/logs",
+    "pages/sweepLogs/sweepLogs",
+    "pages/sweepResult/sweepResult"
   ],
   "requiredBackgroundModes": [
     "audio",
@@ -15,9 +20,29 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "先锋太盟",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "selectedColor": "#002FAA",
+    "color": "#888888",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "selectedIconPath": "static/images/smaIcon/home_active.png",
+        "iconPath": "static/images/smaIcon/home.png"
+      },
+      {
+        "pagePath": "pages/sweepLogs/sweepLogs",
+        "text": "我的",
+        "iconPath": "static/images/smaIcon/personal.png",
+        "selectedIconPath": "static/images/smaIcon/personal_active.png"
+      }
+    ]
+  }
 }

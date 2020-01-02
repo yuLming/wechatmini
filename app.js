@@ -1,4 +1,6 @@
 //app.js
+var utilMd5 = require('utils/md5.js');  
+
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -11,7 +13,22 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
-    })
+    }),
+      wx.getLocation({
+        type: 'gcj02', //返回可以用于wx.openLocation的经纬度
+        success(res) {
+          const latitude = res.latitude
+          const longitude = res.longitude
+          console.log(latitude);
+          console.log(longitude);
+
+          // wx.openLocation({
+          //   latitude,
+          //   longitude,
+          //   scale: 18
+          // })
+        }
+      }),
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -34,6 +51,104 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    baseUrl: 'http://adfs.xftm.com:8767/XftmApp/',
+    testUrl: 'http://127.0.0.1:8767/XftmApp/',
+    basqbh : '',//申请编号
+    bacjhm : '',//车架号
+    id : '',//二维码id,
+    cardInfo:{
+      basqbh:'',//申请编号
+      bacjhm:'',//车架号
+      baclzz:'',//制造商
+      baclcx:'',//车系
+      bacx:'',//车型
+      carcolor:'',//车颜色
+      address:'',//停放位置
+      action:[] //可执行操作
+    },//汽车信息
+    getUserInfo:function (){
+      console.log(wx.getStorageSync('userInfo'));
+      return wx.getStorageSync('userInfo');
+    },
+    getRealUrl:function(e){
+      var a = this.testUrl;
+      switch (e) {
+        case "wxLogin":
+          a += "WxCtrl/wxlogin";
+          break;
+        case "wxSweepCode":
+          a += "WxCtrl/wxSweepCode";
+          break;
+        case "wechatSmallUserLoginMobileBind":
+          a += "/user/login/phone";
+          break;
+        case "weixiUserInfo":
+          a += "/combo/save";
+          break;
+        case "goodsList":
+          a += "/goods/queryGoodsInfoList";
+          break;
+        case "goodsProductinfo":
+          a += "w2/goods/productinfo";
+          break;
+        case "submitOrder":
+          a += "/order/submitOrder";
+          break;
+        case "pay":
+          a += "/order/pay";
+          break;
+        case "uploadImage":
+          a += "/WxCtrl/uploadImage";
+          break;
+        case "queryCarInfo":
+          a += "/WxCtrl/queryCarStockInfo";
+          break;
+         
+        case "sumbitKcActions":
+          a += "/WxCtrl/sumbitKcActions";
+          break;
+      }
+
+      return a;  
+    }
+  },
+   updateValue(e) {
+    let name = e.currentTarget.dataset.name;
+    let nameMap = {}
+    nameMap[name] = e.detail && e.detail.value
+    return nameMap
+  } ,
+  baseAjaxRequest:function(){
+
+
+
+    
+  },
+  getMD5String:function(e){
+    return utilMd5.hexMD5(e);
+
+  },
+  alert:function(msg){
+
+    wx.showToast({
+      title: msg,
+      icon: "none",
+      mask: !1
+    })
+  },
+  /**
+   * 获取ip 地址等信息 
+   * 此http地址在微信开放文档未找到
+   */
+  getClientInfo:function(){
+
+    wx.request({
+      url: 'http://ip-api.com/json',
+      success: function (e) {
+        
+        console.log(e.data);
+
+      }
+    })
   }
 })

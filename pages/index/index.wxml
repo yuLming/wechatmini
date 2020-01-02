@@ -7,10 +7,14 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-  <button bindtap="startScan">
-    扫一扫
+ 
+  <button bindtap="startScan" style="margin-bottom:5%;margin-top:15%">
+    扫描二维码
+  </button>
+  <button bindtap="chooseCarVinimage" style="margin-bottom:5%">
+    扫描车架
+  </button>
+  <button bindtap="chooseCarPlateimage">
+    扫描车牌
   </button>
 </view>

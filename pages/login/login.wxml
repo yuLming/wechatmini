@@ -1,0 +1,44 @@
+
+<view class="container"> 
+  <view class="login-icon">  
+    <image class="login-img" src="images/xftmLogo.jpg"></image>  
+  </view>  
+  <view class="login-from">  
+  <form bindsubmit="login" class='form'>
+    <view class="myno" style="padding-top:7%;">
+    <!-- 学号 -->
+      <view class="weui-cell weui-cell_input">
+      <image class="nameImage" src="images/name.png" style="float:left;padding-top:4px;margin-left:5%;"></image>
+          <!-- <view class="weui-cell__hd">
+              <view class="weui-label">学号</view>
+          </view> -->
+          <view class="weui-cell__bd">
+              <input class="weui-input" style="float:left;width:80%"  bindblur	="eventhandle" value='{{userName}}' data-name ="userName" placeholder="请输入账号" />
+          </view>
+      </view>
+    </view>
+    <view class="mypwd" style="padding-top:7%;">
+      <!-- 密码 -->
+      <view class="weui-cell weui-cell_input">
+      <image class="nameImage" src="images/key.png" style="float:left;padding-top:4px;margin-left:5%;"></image>
+          <!-- <view class="weui-cell__hd">
+              <view class="weui-label">密码</view>
+          </view> -->
+          <!-- <view class="weui-cell__bd" style="float:left">
+              <input class="weui-input" type="password" name="pwd" bindinput="pwdinput"   placeholder="请输入密码" value='{{pwd}}'/>
+          </view> -->
+
+           <view class="weui-cell__bd" style="float:left;width:80%">
+              <input class="weui-input" password data-name ="userPwd" bindblur	="pwdHandle" value='{{userPwd}}' placeholder="请输入密码" />
+          </view>
+      </view>
+    </view>
+ 
+     <!--按钮-->  
+    <view class="loginBtnView">  
+      <button class="loginBtn" size="{{primarySize}}" style="padding-top:0px;" form-type='submit' disabled='{{disabled}}'>登录</button>  
+    </view>  
+    </form>
+  
+  </view>  
+</view> 
