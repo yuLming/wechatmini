@@ -56,6 +56,11 @@ Page({
       })
     }
   },
+  getPhoneNumber(e) {
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+  },
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -72,29 +77,48 @@ Page({
         this.setData({
           motto: res.result
         })
-        console.log(res.result);
-
-        var param = this.data.motto;
-        console.log(typeof(param));
-        var par = {
-          'basqbh': '11111',
-          'bacjhm': 'xxxxxxx',
-          'codeid': '1'
-        }
-        wx.navigateTo({
-          url: '/pages/sweep/sweep'　　 // 页面 A
-        })
+ 
+        let param = this.data.motto;
+       
+        param = JSON.parse(param);
+         
+        // var par = {
+        //   'basqbh': '11111',
+        //   'bacjhm': 'xxxxxxx',
+        //   'codeid': '1'
+        // }
+        // wx.navigateTo({
+        //   url: '/pages/sweep/sweep'　　 // 页面 A
+        // })
         wx.request({
           url: app.globalData.getRealUrl("wxSweepCode"),
           method: 'POST',
           dataType: 'json',
-          data: par,
+          data: param,
           header: {
             'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
           success: (sweepRes) => {
-            console.log(sweepRes);
+            const data = sweepRes.data;
+            console.log(data);
+            console.log(typeof (data));
 
+            if(!data.success){
+              app.alert(data.msg);
+              return false;
+            }
+            // const dataObj = data.;
+            // console.log(typeof (dataObj));
+            // console.log(dataObj)
+
+ 
+            const obj = data.obj;
+            //车牌
+            const result = obj.bacjhm;
+
+            wx.navigateTo({
+              url: '/pages/sweepResult/sweepResult?type=' + 1 + '&result=' + result　　 // 页面 A
+            })
 
           }
         })
@@ -172,5 +196,16 @@ Page({
     })
 
 
+  },
+  loginout:function(){
+
+
+    wx.setStorage({
+      key: 'userInfo',
+      data: []
+    })
+    wx.navigateTo({
+      url: '/pages/login/login' // 页面 A
+    })
   }
 })

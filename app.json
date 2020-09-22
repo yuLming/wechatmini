@@ -1,9 +1,8 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/sweep/sweep",
     "pages/index/index",
-    "pages/login/login",
-    
     "pages/logs/logs",
     "pages/sweepLogs/sweepLogs",
     "pages/sweepResult/sweepResult"

@@ -7,14 +7,19 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
- 
+ <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button>
+
   <button bindtap="startScan" style="margin-bottom:5%;margin-top:15%">
     扫描二维码
   </button>
   <button bindtap="chooseCarVinimage" style="margin-bottom:5%">
     扫描车架
   </button>
-  <button bindtap="chooseCarPlateimage">
+  <button bindtap="chooseCarPlateimage" style="margin-bottom:5%">
     扫描车牌
+  </button>
+
+   <button bindtap="loginout">
+    退出登陆
   </button>
 </view>

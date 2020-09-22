@@ -16,20 +16,10 @@ Page({
     address: '', //停放位置,
     carNo:'',//车牌号
     //可执行操作
-    actions: [{
-      "realValue": "xxxx",
-      "name": "yyyyy"
-    }, {
-
-      "realValue": "xxxxx",
-      "name": "yyyyy222"
-
-    }, {
-      "realValue": "xxxxx",
-      "name": "yyyyy222"
-    }],
+    actions: [],
     type: "",
     result: "",
+    user:'',
     checkBoxList:[]//被选中的checkbox
   },
 
@@ -40,15 +30,17 @@ Page({
     const type = options.type;
     const result = options.result;
 
+    const appUserInfo = app.globalData.getUserInfo();
 
     this.setData({
       type: type,
-      result: result
+      result: result,
+      user: appUserInfo.XTCZDM
     })
     const param = {
-      "type": 1,
-      "condition": "xxxxx",
-      "user": "xxxx"
+      "type": type,
+      "condition": result,
+      "user": appUserInfo.XTCZDM
 
     };
     wx.request({
@@ -157,6 +149,21 @@ Page({
       },
       success: (res) => {
         console.log(res);
+         if(res.data.success){
+           wx.showToast({
+            title: res.data.msg,
+            icon: 'loading',
+            mask: true,
+            duration: 3000
+          })
+          wx.switchTab({
+            url: '/pages/index/index'　　// 页面 A
+          })
+
+        }else{
+          app.alert(res.data.msg);
+
+        }
       }
     })
   },

@@ -48,6 +48,7 @@ Page({
 
         
         if (loginRes.data.success){
+          console.log('登录成功')
           wx.switchTab({
             url: '/pages/index/index'　　// 页面 A
           })
