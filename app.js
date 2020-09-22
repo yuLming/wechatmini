@@ -71,7 +71,7 @@ App({
       return wx.getStorageSync('userInfo');
     },
     getRealUrl:function(e){
-      var a = this.testUrl;
+      var a = this.baseUrl;
       switch (e) {
         case "wxLogin":
           a += "WxCtrl/wxlogin";

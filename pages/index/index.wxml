@@ -8,7 +8,10 @@
     </block>
   </view>
  
-  <button bindtap="startScan" style="margin-bottom:5%;margin-top:15%">
+  <button style="margin-bottom:5%;margin-top:15%">
+    入库订单查询
+  </button>
+  <button bindtap="startScan" style="margin-bottom:5%;">
     扫描二维码
   </button>
   <button bindtap="chooseCarVinimage" style="margin-bottom:5%">
