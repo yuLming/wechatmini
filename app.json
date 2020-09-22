@@ -3,8 +3,11 @@
     "pages/login/login",
     "pages/sweep/sweep",
     "pages/index/index",
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> 38df40fb727b172d2e3b8d20b9ac65f3dfb2e0e9
     "pages/logs/logs",
     "pages/sweepLogs/sweepLogs",
     "pages/sweepResult/sweepResult"

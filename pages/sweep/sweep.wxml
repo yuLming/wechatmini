@@ -17,7 +17,7 @@
           <view class="item-inner">
             <view class="item-title label">车架号</view>
             <view class="item-input">
-              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number" value="{{bacjhm}}"></input>
+              <input  name="mobile" disabled="true" placeholderClass="input-placeholder" type="number" value="{{bacjhm}}"></input>
             </view>
           </view>
         </view>
