@@ -7,17 +7,11 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-<<<<<<< HEAD
  
   <button style="margin-bottom:5%;margin-top:15%">
     入库订单查询
   </button>
   <button bindtap="startScan" style="margin-bottom:5%;">
-=======
- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button>
-
-  <button bindtap="startScan" style="margin-bottom:5%;margin-top:15%">
->>>>>>> 38df40fb727b172d2e3b8d20b9ac65f3dfb2e0e9
     扫描二维码
   </button>
   <button bindtap="chooseCarVinimage" style="margin-bottom:5%">
