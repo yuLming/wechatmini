@@ -1,0 +1,19 @@
+<view class="app-page">
+  <view class='table'>
+    <view class="tr bg-w">
+      <view class="th">客户姓名</view>
+      <view class="th">申请编号</view>
+      <view class="th">入库状态</view>
+      <view class="th">详情</view>
+    </view>
+  </view>
+  
+  <block wx:for="{{listData}}" wx:key="item">
+    <view class="tr">
+       <view class="td">{{item.code}}</view>
+       <view class="td">{{item.text}}</view>
+       <view class="td">{{item.type}}</view>
+       <view class="td details" data-index="{{item}}" bindtap="toDetails">详情</view>
+    </view>
+  </block>
+</view>

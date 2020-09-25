@@ -2,7 +2,7 @@
 var utilMd5 = require('utils/md5.js');
 
 App({
-  onLaunch: function() {
+  onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -10,10 +10,10 @@ App({
 
     // 登录
     wx.login({
-        success: res => {
-          // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        }
-      }),
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      }
+    }),
       wx.getLocation({
         type: 'gcj02', //返回可以用于wx.openLocation的经纬度
         success(res) {
@@ -27,7 +27,7 @@ App({
           //   longitude,
           //   scale: 18
           // })
-      
+
         }
       }),
       // 获取用户信息
@@ -38,9 +38,7 @@ App({
             wx.getUserInfo({
               success: res => {
                 // 可以将 res 发送给后台解码出 unionId
-                console.log( userInfo)
                 this.globalData.userInfo = res.userInfo
-
                 // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
                 // 所以此处加入 callback 以防止这种情况
                 if (this.userInfoReadyCallback) {
@@ -68,15 +66,12 @@ App({
       address: '', //停放位置
       action: [] //可执行操作
     }, //汽车信息
-    getUserInfo: function() {
+    getUserInfo: function () {
       console.log(wx.getStorageSync('userInfo'));
       return wx.getStorageSync('userInfo');
     },
-<<<<<<< HEAD
-    getRealUrl:function(e){
-=======
-    getRealUrl: function(e) {
->>>>>>> 38df40fb727b172d2e3b8d20b9ac65f3dfb2e0e9
+
+    getRealUrl: function (e) {
       var a = this.baseUrl;
       switch (e) {
         case "wxLogin":
@@ -109,10 +104,12 @@ App({
         case "queryCarInfo":
           a += "/WxCtrl/queryCarStockInfo";
           break;
-
         case "sumbitKcActions":
           a += "/WxCtrl/sumbitKcActions";
           break;
+        // 获取详情请求
+        case "details":
+          a += "/WxCtrl/details"
       }
 
       return a;
@@ -124,17 +121,17 @@ App({
     nameMap[name] = e.detail && e.detail.value
     return nameMap
   },
-  baseAjaxRequest: function() {
+  baseAjaxRequest: function () {
 
 
 
 
   },
-  getMD5String: function(e) {
+  getMD5String: function (e) {
     return utilMd5.hexMD5(e);
 
   },
-  alert: function(msg) {
+  alert: function (msg) {
 
     wx.showToast({
       title: msg,
@@ -146,11 +143,11 @@ App({
    * 获取ip 地址等信息 
    * 此http地址在微信开放文档未找到
    */
-  getClientInfo: function() {
+  getClientInfo: function () {
 
     wx.request({
       url: 'http://ip-api.com/json',
-      success: function(e) {
+      success: function (e) {
 
         console.log(e.data);
 

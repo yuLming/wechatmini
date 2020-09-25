@@ -69,6 +69,15 @@ Page({
       hasUserInfo: true
     })
   },
+  toQueryOrder: function(){
+    // 请求获取数据
+    
+
+    // 跳转
+    wx.navigateTo({
+      url: '/pages/queryorder/queryorder'
+    })
+  },
   startScan: function(e) {
     console.log(e);
     wx.scanCode({

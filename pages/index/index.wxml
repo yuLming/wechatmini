@@ -8,7 +8,7 @@
     </block>
   </view>
  
-  <button style="margin-bottom:5%;margin-top:15%">
+  <button bindtap="toQueryOrder" style="margin-bottom:5%;margin-top:15%">
     入库订单查询
   </button>
   <button bindtap="startScan" style="margin-bottom:5%;">
@@ -20,7 +20,6 @@
   <button bindtap="chooseCarPlateimage" style="margin-bottom:5%">
     扫描车牌
   </button>
-
    <button bindtap="loginout">
     退出登陆
   </button>

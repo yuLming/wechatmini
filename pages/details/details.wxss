@@ -1,5 +1,3 @@
-/* pages/userCenter/addressAdd/addressAdd.wxss */
-/* .page-content { background: #e4d3c9; } */
 .page-content { 
   overflow: auto; 
   -webkit-overflow-scrolling: touch; 
@@ -8,27 +6,11 @@
   position: relative; 
   z-index: 1; 
 }
-
-.delete-btn{
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.pic {
-  float:left;
-  position:relative;
-  margin-right:9px;
-  margin-bottom:9px;
-  }
-.content-block-title { position: relative; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 14px; text-transform: uppercase; line-height: 1; color: #6d6d72; margin: 35px 15px 10px; }
-
 .list-block {
   background-color: #fff;
 }
-/**行内元素***/
 .list-block .item-inner { padding-right: 15px; position: relative; width: 100%; padding-top: 8px; padding-bottom: 7px; min-height: 44px; box-sizing: border-box; display: -webkit-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-box-flex: 1; -ms-flex: 1; overflow: hidden; -webkit-box-pack: justify; -ms-flex-pack: justify; -webkit-justify-content: space-between; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; -webkit-align-items: center; align-items: center; -ms-flex-item-align: stretch; -webkit-align-self: stretch; align-self: stretch; }
 .list-block .item-content { box-sizing: border-box; padding-left: 15px; min-height: 44px; display: -webkit-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; -webkit-justify-content: space-between; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; -webkit-align-items: center; align-items: center; }
-
 .item-inner {
   display: block;
   align-content: none;
@@ -40,29 +22,3 @@
   -webkit-align-self: stretch;
   align-self: stretch;
 }
-.mask {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #000;
-  z-index: 9000;
-  opacity: 0.7;
-}
- 
-.dialog-box {
-  width: 600rpx;
-  height: 720rpx;
-  position: fixed;
-  top: 50%;
-  left: 0;
-  z-index: 9999;
-  margin: -370rpx 85rpx;
-  background-color: #fff;
-  border-radius: 36rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
- 
