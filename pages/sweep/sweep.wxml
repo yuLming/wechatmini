@@ -104,39 +104,49 @@
           </view>
         </view>
 
-        <view style="margin-left: 10%;margin-top: 5%">
-          <radio-group>
-            <label class="weui-cell weui-check__label">
-              <view class="weui-cell__hd">
-                <text class="weui-cell__bd" space="ensp">是否有自愿放弃书 </text>
-                <radio value="{{item.value}}" /><text space="emsp">是 </text>
-                <radio value="{{item.value}}" /><text>否</text>
+        <view style="margin-left: 10%;margin-top: 5%; ">
+          <radio-group class="radio-group" bindchange="ifGiveUpChecked">
+            <view>
+              <text>是否有自愿放弃书</text>
+              <view style="float: right; margin-right: 10%">
+                是<radio value="{{true}}"></radio>
+                否<radio value="{{false}}"></radio>
               </view>
-              <view class="weui-cell__hd">
-                <text class="weui-cell__bd" space="ensp">是否有车钥匙 </text>
-                <radio value="{{item.value}}" /><text space="emsp">  是 </text>
-                <radio value="{{item.value}}" /><text>否</text>
+            </view>
+          </radio-group>
+          <radio-group class="radio-group" bindchange="ifKeyToCarChecked">
+            <view>
+              <text>是否有车钥匙</text>
+              <view style="float: right; margin-right: 10%">
+                是<radio value="{{true}}"></radio>
+                否<radio value="{{false}}"></radio>
               </view>
-              <view class="weui-cell__hd">
-                <text class="weui-cell__bd" space="ensp">是否有行驶证 </text>
-                <radio value="{{item.value}}" /><text space="emsp">  是 </text>
-                <radio value="{{item.value}}" /><text>否</text>
+            </view>
+          </radio-group>
+          <radio-group class="radio-group" bindchange="ifXSZChecked">
+            <view>
+              <text>是否有行驶证</text>
+              <view style="float: right; margin-right: 10%">
+                是<radio value="{{true}}"></radio>
+                否<radio value="{{false}}"></radio>
               </view>
-            </label>
+            </view>
           </radio-group>
         </view>
 
-        <view class="item-content" style="margin-top: 5%">
+        <!-- <view class="item-content" style="margin-top: 5%">
+          <view wx:for="{{files}}" wx:key="{{index}}" class="item-inner">
+            <view data-index="{{index}}">车辆入库及财物交接单</view>
+            <button class="upload-img-btn" bindtap="uploadImage" type='primary' size="mini">上传</button>
+          </view>
+        </view> -->
+        <view  style="margin-top: 5%">
           <view class="item-inner">
             <view>车辆入库及财物交接单</view>
             <button class="upload-img-btn" bindtap="uploadImage" type='primary' size="mini">上传</button>
           </view>
-          <view class="weui-uploader__input-box pic" bindtap="upload"> </view>
         </view>
         <!-- 预览 -->
-        <!-- <view wx:for="{{formData.filePaths}}" wx:key="filePath">
-          <image src="{{filePath}}"></image>
-        </view> -->
         <view class='pic' wx:for="{{imgs}}" wx:for-item="item" wx:key="*this">
           <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" mode="aspectFill"
             bindtap="previewImg">
@@ -148,58 +158,60 @@
         <view class="content-block" style="margin:35px 0 5px">
           <button class="button button-big jmed-active" formType="submit" style="width: 70%;margin:0 auto">确定</button>
         </view>
-        <!-- 模态框 -->
-        <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-        <view class="dialog-box" wx:if="{{showModal}}">
-          <view style="font-weight: 700; margin-top: 30rpx">入库车辆信息</view>
-          <view class="item-content">
-            <view class="item-inner">
-              <view class="item-title label" style="white-space:nowrap;">客户姓名</view>
-              <view class="item-input">
-                <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-                  value="{{bacx}}"></input>
-              </view>
-            </view>
-          </view>
-          <view class="item-content">
-            <view class="item-inner">
-              <view class="item-title label" style="white-space:nowrap;">车牌号</view>
-              <view class="item-input">
-                <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-                  value="{{bacx}}"></input>
-              </view>
-            </view>
-          </view>
-          <view class="item-content">
-            <view class="item-inner">
-              <view class="item-title label" style="white-space:nowrap;">车架号</view>
-              <view class="item-input">
-                <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-                  value="{{bacx}}"></input>
-              </view>
-            </view>
-          </view>
-          <view class="item-content">
-            <view class="item-inner">
-              <view class="item-title label" style="white-space:nowrap;">入库日期</view>
-              <view class="item-input">
-                <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-                  value="{{bacx}}"></input>
-              </view>
-            </view>
-          </view>
-          <view class="item-content">
-            <view class="item-inner">
-              <view class="item-title label" style="white-space:nowrap;">入库人员</view>
-              <view class="item-input">
-                <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-                  value="{{bacx}}"></input>
-              </view>
-            </view>
-          </view>
-          <button bindtap="confirm">我知道了</button>
-        </view>
       </view>
     </form>
+
+    <!-- 模态框 -->
+    <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+    <view class="dialog-box" wx:if="{{showModal}}">
+      <view style="font-weight: 700; margin-top: 30rpx">入库车辆信息</view>
+      <view class="item-content">
+        <view class="item-inner">
+          <view class="item-title label" style="white-space:nowrap;">客户姓名</view>
+          <view class="item-input">
+            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+              value="{{bacx}}"></input>
+          </view>
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="item-inner">
+          <view class="item-title label" style="white-space:nowrap;">车牌号</view>
+          <view class="item-input">
+            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+              value="{{bacx}}"></input>
+          </view>
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="item-inner">
+          <view class="item-title label" style="white-space:nowrap;">车架号</view>
+          <view class="item-input">
+            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+              value="{{bacx}}"></input>
+          </view>
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="item-inner">
+          <view class="item-title label" style="white-space:nowrap;">入库日期</view>
+          <view class="item-input">
+            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+              value="{{bacx}}"></input>
+          </view>
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="item-inner">
+          <view class="item-title label" style="white-space:nowrap;">入库人员</view>
+          <view class="item-input">
+            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+              value="{{bacx}}"></input>
+          </view>
+        </view>
+      </view>
+      <button bindtap="confirm">我知道了</button>
+    </view>
+
   </view>
 </view>

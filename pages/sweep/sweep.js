@@ -7,7 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    ifGiveUp: '',     // 是否有自愿放弃书
+    ifKeyToCar: '',   // 是否有车钥匙
+    ifXSZ: '',        // 是否有行驶证
     showModal: false,   // 模态框默认关闭
+    files: [],          // 接收文件单子
     imgs: [],   // 存放图片
     basqbh: '', //申请编号
     bacjhm: '', //车架号
@@ -65,7 +69,8 @@ Page({
           bacx: obj.clcx, //车型
           carcolor: obj.carColor, //车颜色
           address: obj.address, //停放位置
-          carNo: obj.carNo
+          carNo: obj.carNo,
+          files: obj.files   // 接收文件单子
         })
         const actions = obj.actions;
         this.setData({ actions: [] })
@@ -85,7 +90,24 @@ Page({
       }
     })
   },
-
+  ifGiveUpChecked: function (e) {
+    this.setData({
+      ifGiveUp: e.detail.value
+    })
+    console.log('ifGiveUpChecked事件，携带value值为：', this.data.ifGiveUp)
+  },
+  ifKeyToCarChecked: function (e) {
+    this.setData({
+      ifKeyToCar: e.detail.value
+    })
+    console.log('ifKeyToCarChecked事件，携带value值为：', this.data.ifKeyToCar)
+  },
+  ifXSZChecked: function (e) {
+    this.setData({
+      ifXSZ: e.detail.value
+    })
+    console.log('ifXSZChecked事件，携带value值为：', this.data.ifXSZ)
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -139,7 +161,14 @@ Page({
       app.alert("请选择您要执行的操作");
       return false;
     }
-    console.log(this.data.checkBoxList);
+    if(!this.data.ifGiveUp || !this.data.ifKeyToCar || !this.data.ifXSZ){
+      app.alert("不忘忘记是否按钮")
+      return false
+    }
+    if (this.data.imgs.length < 3) {
+      app.alert("别忘记上传图片");
+      return false;
+    }
 
     wx.request({
       url: app.globalData.getRealUrl("sumbitKcActions"),
@@ -206,8 +235,11 @@ Page({
   preventTouchMove: function () {
 
   },
-// 上传图片
-  uploadImage: function () {
+  // 上传图片
+  uploadImage: function (e) {
+    let a = e.currentTarget.dataset['index']
+    console.log("123123123",a)
+
     var that = this;
     var imgs = this.data.imgs;
     if (imgs.length >= 9) {
@@ -223,56 +255,41 @@ Page({
     }
     let imagePaths
     wx.chooseImage({
-      count: 5,
-      sizeType: ['original', 'compressed'],
-      sourceType: ['album', 'camera'],
+      count: 1,
+      sizeType: ['compressed'],   // 'original',
+      sourceType: ['camera'],
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         imagePaths = res.tempFilePaths;
         var imgs = that.data.imgs;
         // console.log(imagePaths + '----');
         for (var i = 0; i < imagePaths.length; i++) {
-          if (imgs.length >= 9) {
-            that.setData({
-              imgs: imgs
-            });
-            return false;
-          } else {
-            imgs.push(imagePaths[i]);
-          }
+          imgs.push(imagePaths[i]);
         }
         // console.log(imgs);
         that.setData({
           imgs: imgs
         });
       }
-
     })
-    // 定义一个变量，用来存储上传成功的图片路径
-    // let successPaths = []
-    // wx.uploadFile 接口只能一次上传 1 张图片，所以需要先遍历
-    // imagePaths.forEach((path) => {
-    // wx.uploadFile({
-    //   url: api.apiRootUrl + '/distribution/addPicture',   // 接口地址
-    //   filePath: path,	// 当前图片路径
-    //   name: 'file',
-    //   header: { "Content-Type": "multipart/form-data" },
-    //   success: res => {					// 上传成功的回调函数
-    //     if (res.code == 200) {
-    //       successPaths.push(res.filePath)
-    //     } else {
-    //       this.showToast({
-    //         title: res.msg
-    //       })
-    //     }
-    //     let filePaths = `formData.filePaths`
-    //     // 存储上传成功的图片路径
-    //     this.setData({
-    //       [filePaths]: successPaths
-    //     })
-    //   }
-    // })
-    // })
+    // wx.uploadFile 接口只能一次上传 1 张图片
+    wx.uploadFile({
+      url: api.apiRootUrl + '/distribution/addPicture',   // 后台服务URL
+      filePath: path,   // 微信返回的临时图片地址
+      name: 'file',
+      header: { "Content-Type": "multipart/form-data" },
+      success: res => {					// 上传成功的回调函数
+        if (res.code == 200) {
+          // 上传成功后，把路径set到data 里
+          
+        } else {
+          this.showToast({
+            title: '上传失败'
+          })
+        }
+      }
+    })
+
 
   },
   checkboxChange: function (e) {
@@ -280,12 +297,11 @@ Page({
     this.setData({ checkBoxList: [] })
 
     const item = e.detail.value //选中的数组
-    console.log89 == (item);
+    console.log("选中的数组", item);
     let checkBoxList = []
     for (var i = 0; i < item.length; i++) {
       var selectKey = item[i]; //将数组进行分割
       checkBoxList.push({
-
         "key": selectKey
       });
     }

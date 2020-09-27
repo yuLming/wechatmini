@@ -65,4 +65,7 @@
   flex-direction: column;
   align-items: center;
 }
+.radio-group{
+  height: 2rem;
+}
  
