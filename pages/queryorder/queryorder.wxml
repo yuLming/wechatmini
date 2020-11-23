@@ -10,9 +10,9 @@
   
   <block wx:for="{{listData}}" wx:key="item">
     <view class="tr">
-       <view class="td">{{item.code}}</view>
-       <view class="td">{{item.text}}</view>
-       <view class="td">{{item.type}}</view>
+       <view class="td">{{item.applyName}}</view>
+       <view class="td">{{item.applyNo}}</view>
+       <view class="td">{{item.putIn}}</view>
        <view class="td details" data-index="{{item}}" bindtap="toDetails">详情</view>
     </view>
   </block>

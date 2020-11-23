@@ -51,8 +51,10 @@ App({
       })
   },
   globalData: {
-    baseUrl: 'https://ykc.xftm.com/XftmApp/',
-    testUrl: 'https://testwx.xftm.com/XftmApp/',
+    baseUrl: 'https://tmdh.xftm.com/XftmApp/',
+    testUrl: 'http://testwx.xftm.com/XftmApp/',
+    testGwpUrl: 'https://www.xftmleasing.com:4443/TMDH',    // 刚伟鹏的测试地址
+    baseGwpUrl: 'https://tmdh.xftm.com/TMDH',    // 刚伟鹏的正式地址
     basqbh: '', //申请编号
     bacjhm: '', //车架号
     id: '', //二维码id,
@@ -73,6 +75,7 @@ App({
 
     getRealUrl: function (e) {
       var a = this.baseUrl;
+      var b = this.baseGwpUrl;
       switch (e) {
         case "wxLogin":
           a += "WxCtrl/wxlogin";
@@ -101,15 +104,29 @@ App({
         case "uploadImage":
           a += "/WxCtrl/uploadImage";
           break;
-        case "queryCarInfo":
-          a += "/WxCtrl/queryCarStockInfo";
+        // 上传
+        case "baseUpload":
+          a += "FileCtrl/baseUploadFileOneToDh";
           break;
-        case "sumbitKcActions":
-          a += "/WxCtrl/sumbitKcActions";
-          break;
-        // 获取详情请求
-        case "details":
-          a += "/WxCtrl/details"
+        // 之前的接口
+        // case "queryCarInfo":
+        //   a += "/WxCtrl/queryCarStockInfo";
+        //   break;
+        // case "sumbitKcActions":
+        //   a += "/WxCtrl/sumbitKcActions";
+        //   break;
+        // 获取已入库订单列表
+        case "queryPutInList":
+          b += "/xcx/queryPutInList.action";
+          return b;
+        // 扫码进入操作详情页面
+        case "carInfo":
+          b += "/xcx/queryCarInfo.action";
+          return b;
+        // 提交
+        case "scanSubmit":
+          b += "/xcx/scanSubmit.action";
+          return b;
       }
 
       return a;

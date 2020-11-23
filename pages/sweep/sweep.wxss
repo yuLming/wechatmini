@@ -15,7 +15,6 @@
   right: 0;
 }
 .pic {
-  float:left;
   position:relative;
   margin-right:9px;
   margin-bottom:9px;
@@ -52,14 +51,13 @@
 }
  
 .dialog-box {
-  width: 600rpx;
-  height: 720rpx;
+  width: 80%;
+  height: 80%;
   position: fixed;
   top: 50%;
   left: 0;
-  z-index: 9999;
-  margin: -370rpx 85rpx;
-  background-color: #fff;
+  margin: -50% 10%;
+  background-color: #d3ddd5;
   border-radius: 36rpx;
   display: flex;
   flex-direction: column;

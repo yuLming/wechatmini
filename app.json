@@ -1,10 +1,11 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/sweep/sweep",
     "pages/queryorder/queryorder",
     "pages/index/index",
     "pages/details/details",
-    "pages/login/login",
+    
     
 
     "pages/logs/logs",
@@ -36,13 +37,13 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
+        "text": " ",
         "selectedIconPath": "static/images/smaIcon/home_active.png",
         "iconPath": "static/images/smaIcon/home.png"
       },
       {
         "pagePath": "pages/sweepLogs/sweepLogs",
-        "text": "我的",
+        "text": " ",
         "iconPath": "static/images/smaIcon/personal.png",
         "selectedIconPath": "static/images/smaIcon/personal_active.png"
       }

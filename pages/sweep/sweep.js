@@ -7,12 +7,23 @@ Page({
    * 页面的初始数据
    */
   data: {
+    disabled: false,  // 设置提交按钮默认可用
+    xtjsdm: '',     // 系统角色
+    isShow: false,   // 根据登录角色页面显示是否按钮
+    atDate: '',   // 当前时间
+    person: '',   // 入库人员
+    f: [],
+    operType: '',   // 操作
+    scrwid: '',
     ifGiveUp: '',     // 是否有自愿放弃书
     ifKeyToCar: '',   // 是否有车钥匙
     ifXSZ: '',        // 是否有行驶证
     showModal: false,   // 模态框默认关闭
     files: [],          // 接收文件单子
-    imgs: [],   // 存放图片
+    imgs1: [],   // 存放图片
+    imgs2: [],   // 存放图片
+    imgs3: [],   // 存放图片
+    applyName: '',  // 客户姓名
     basqbh: '', //申请编号
     bacjhm: '', //车架号
     baclzz: '', //制造商
@@ -33,24 +44,35 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const type = options.type;
+    // const type = options.type;
     const result = options.result;
 
     const appUserInfo = app.globalData.getUserInfo();
-
+    console.log("角色", appUserInfo.XTJSDM)
     this.setData({
-      type: type,
+      // type: type,
       result: result,
-      user: appUserInfo.XTCZDM
+      person: appUserInfo.XTCZMC,
+      user: appUserInfo.XTCZDM,
+      xtjsdm: appUserInfo.XTJSDM
     })
+    if (appUserInfo.XTJSDM == "7025") {
+      this.setData({
+        isShow: true
+      })
+    }
     const param = {
-      "type": type,
-      "condition": result,
-      "user": appUserInfo.XTCZDM
+      // "type": type,
+      // "condition": result,
+      // "user": appUserInfo.XTCZDM
+
+      "user": appUserInfo.XTCZDM,
+      "vin": result
 
     };
     wx.request({
-      url: app.globalData.getRealUrl("queryCarInfo"),
+      // url: app.globalData.getRealUrl("queryCarInfo"),    // 改成刚伟鹏的新的接口
+      url: app.globalData.getRealUrl("carInfo"),
       method: 'GET',
       dataType: 'json',
       data: param,
@@ -58,19 +80,35 @@ Page({
         'content-type': 'application/json;charset=UTF-8' // 默认值
       },
       success: (res) => {
-        console.log(res);
-        const obj = res.data.obj;
-        console.log(obj);
+        console.log("返回数据", res.data.data)
+        if (res.data.data == undefined || res.data.data == "") {
+          wx.showModal({
+            title: '注意',
+            content: '入库失败',
+            showCancel: false,
+            success(res) {
+              if (res.confirm) {
+                wx.switchTab({
+                  url: '/pages/index/index'　　// 页面 A
+                })
+              }
+            }
+          })
+        }
+        const obj = res.data.data;
         this.setData({
-          basqbh: obj.basqbh, //申请编号
-          bacjhm: obj.bacjhm, //车架号
-          baclzz: obj.clzz, //制造商
-          baclcx: '', //车系
-          bacx: obj.clcx, //车型
-          carcolor: obj.carColor, //车颜色
-          address: obj.address, //停放位置
-          carNo: obj.carNo,
-          files: obj.files   // 接收文件单子
+          scrwid: obj.scrwid,
+          applyName: obj.applyName,   // 客户姓名
+          basqbh: obj.applyNo, //申请编号
+          bacjhm: obj.vin, //车架号
+          baclzz: obj.carMark, //制造商
+          baclcx: obj.carLine, //车系
+          bacx: obj.carModel, //车型
+          carcolor: obj.carColour, //车颜色
+          address: obj.stopSite, //停放位置
+          carNo: obj.carNumber,   // 车牌
+          files: obj.files,   // 接收文件单子
+          operType: obj.operType
         })
         const actions = obj.actions;
         this.setData({ actions: [] })
@@ -157,70 +195,170 @@ Page({
 
   },
   operaCarStock: function () {
-    if (this.data.checkBoxList.length == 0) {
-      app.alert("请选择您要执行的操作");
-      return false;
+    let time = new Date();
+    let date = time.toLocaleDateString()
+    this.setData({
+      atDate: date
+    })
+    // 这里加上
+    if (this.data.isShow == true) {
+      if (!this.data.ifGiveUp || !this.data.ifKeyToCar || !this.data.ifXSZ) {
+        app.alert("别忘记选择按钮")
+        return false
+      }
     }
-    if(!this.data.ifGiveUp || !this.data.ifKeyToCar || !this.data.ifXSZ){
-      app.alert("不忘忘记是否按钮")
-      return false
-    }
-    if (this.data.imgs.length < 3) {
+    const l = this.data.f
+    console.log("上传的图片数量", l.length)
+    if (l.length < 3) {
       app.alert("别忘记上传图片");
       return false;
     }
+    let str = "";
+    for (let k in l) {
+      let files = l[k]
+      str += files.fileCode + ","
+    }
+    console.log(str.indexOf("5719"), "123123123", str)
 
+    if (this.data.xtjsdm == "7025") {
+      if (str.indexOf("5714") == -1) {
+        app.alert("别忘记上传车辆基本状况描述");
+        return false;
+      } else if (str.indexOf("5716") == -1) {
+        app.alert("别忘记上传车辆照片");
+        return false;
+      } else if (str.indexOf("5717") == -1) {
+        app.alert("别忘记上传车辆入库及财务交接单");
+        return false;
+      }
+      if (this.data.imgs1.length < 1) {
+        app.alert("别忘记上传车辆基本状况描述");
+          return false;
+      }
+      if (this.data.imgs2.length < 1) {
+        app.alert("别忘记上传车辆照片");
+          return false;
+      }
+      if (this.data.imgs3.length < 1) {
+        app.alert("别忘记上传车辆入库及财务交接单");
+          return false;
+      }
+    } else {
+      if (str.indexOf("5707") == -1) {
+        app.alert("别忘记上传车辆回收报告");
+        return false;
+      } else if (str.indexOf("5708") == -1) {
+        app.alert("别忘记上传车辆入库及财务交接单");
+        return false;
+      } else if (str.indexOf("5709") == -1) {
+        app.alert("别忘记上传车辆基本状况描述");
+        return false;
+      }
+      if (this.data.imgs1.length < 1) {
+        app.alert("别忘记上传车辆回收报告");
+          return false;
+      }
+      if (this.data.imgs2.length < 1) {
+        app.alert("别忘记上传车辆入库及财务交接单");
+          return false;
+      }
+      if (this.data.imgs3.length < 1) {
+        app.alert("别忘记上传车辆基本状况描述");
+          return false;
+      }
+    }
+
+    const param = {
+      "scrwid": this.data.scrwid,
+      "user": this.data.user,
+      "ifGiveUp": this.data.ifGiveUp,
+      "ifKeyToCar": this.data.ifKeyToCar,
+      "ifXSZ": this.data.ifXSZ,
+      "files": this.data.f
+    };
     wx.request({
-      url: app.globalData.getRealUrl("sumbitKcActions"),
+      url: app.globalData.getRealUrl("scanSubmit"),
       method: 'POST',
       dataType: 'json',
-      data: { 'args': JSON.stringify(this.data) },
+      data: param,
       header: {
         'content-type': 'application/json;charset=UTF-8' // 默认值
       },
       success: (res) => {
-        console.log(res);
-        if (res.data.success) {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'loading',
-            mask: true,
-            duration: 3000
-          })
+        console.log("提交返回后", res.data.code);
+        if (res.data.code == '0000') {
           this.setData({
-            showModal: true
+            showModal: true,
+            disabled: true
           })
-          // wx.switchTab({
-          //   url: '/pages/index/index'　　// 页面 A
-          // })
-
         } else {
-          app.alert(res.data.msg);
-
+          app.alert(res.data.message);
         }
       }
     })
   },
   // 删除图片
-  deleteImg: function (e) {
-    var imgs = this.data.imgs;
+  deleteImg1: function (e) {
+    var imgs1 = this.data.imgs1;
     var index = e.currentTarget.dataset.index;
-    imgs.splice(index, 1);
+    imgs1.splice(index, 1);
     this.setData({
-      imgs: imgs
+      imgs1: imgs1
     });
   },
-  // 预览图片
-  previewImg: function (e) {
+  deleteImg2: function (e) {
+    var imgs2 = this.data.imgs2;
+    var index = e.currentTarget.dataset.index;
+    imgs2.splice(index, 1);
+    this.setData({
+      imgs2: imgs2
+    });
+  },
+  deleteImg3: function (e) {
+    var imgs3 = this.data.imgs3;
+    var index = e.currentTarget.dataset.index;
+    imgs3.splice(index, 1);
+    this.setData({
+      imgs3: imgs3
+    });
+  },
+  // // 预览图片
+  previewImg1: function (e) {
     //获取当前图片的下标
     var index = e.currentTarget.dataset.index;
     //所有图片
-    var imgs = this.data.imgs;
+    var imgs1 = this.data.imgs1;
     wx.previewImage({
       //当前显示图片
-      current: imgs[index],
+      current: imgs1[index],
       //所有图片
-      urls: imgs
+      urls: imgs1
+    })
+  },
+  // // 预览图片
+  previewImg2: function (e) {
+    //获取当前图片的下标
+    var index = e.currentTarget.dataset.index;
+    //所有图片
+    var imgs2 = this.data.imgs2;
+    wx.previewImage({
+      //当前显示图片
+      current: imgs2[index],
+      //所有图片
+      urls: imgs2
+    })
+  },
+  // // 预览图片
+  previewImg3: function (e) {
+    //获取当前图片的下标
+    var index = e.currentTarget.dataset.index;
+    //所有图片
+    var imgs3 = this.data.imgs3;
+    wx.previewImage({
+      //当前显示图片
+      current: imgs3[index],
+      //所有图片
+      urls: imgs3
     })
   },
   // 模态框事件
@@ -237,22 +375,13 @@ Page({
   },
   // 上传图片
   uploadImage: function (e) {
-    let a = e.currentTarget.dataset['index']
-    console.log("123123123",a)
-
+    console.log("上传文件传的code", e.currentTarget.dataset['index'])
     var that = this;
-    var imgs = this.data.imgs;
-    if (imgs.length >= 9) {
-      this.setData({
-        lenMore: 1
-      });
-      setTimeout(function () {
-        that.setData({
-          lenMore: 0
-        });
-      }, 2500);
-      return false;
-    }
+    var imgs1 = that.data.imgs1;
+    var imgs2 = that.data.imgs2;
+    var imgs3 = that.data.imgs3;
+    
+    // var o
     let imagePaths
     wx.chooseImage({
       count: 1,
@@ -260,37 +389,59 @@ Page({
       sourceType: ['camera'],
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        imagePaths = res.tempFilePaths;
-        var imgs = that.data.imgs;
-        // console.log(imagePaths + '----');
-        for (var i = 0; i < imagePaths.length; i++) {
-          imgs.push(imagePaths[i]);
+        if(e.currentTarget.dataset['index'] == "5714" || e.currentTarget.dataset['index'] == "5707"){
+          imgs1.push(res.tempFilePaths);
         }
-        // console.log(imgs);
+        if(e.currentTarget.dataset['index'] == "5716" || e.currentTarget.dataset['index'] == "5708"){
+          imgs2.push(res.tempFilePaths);
+        }
+        if(e.currentTarget.dataset['index'] == "5717" || e.currentTarget.dataset['index'] == "5709"){
+          imgs3.push(res.tempFilePaths);
+        }
+        imagePaths = res.tempFilePaths;
+
+        console.log(imagePaths + '    ----');
+        const f = that.data.f
+
+        console.log(imagePaths)
+        // wx.uploadFile 接口只能一次上传 1 张图片
+        wx.uploadFile({
+          url: app.globalData.getRealUrl("baseUpload"),
+          filePath: imagePaths[0],   // 微信返回的临时图片地址
+          name: 'file',
+          header: { "Content-Type": "multipart/form-data" },
+          success: res => {					// 上传成功的回调函数
+            console.log("上传文件返回", res.data)
+            let d = JSON.parse(res.data)
+            let obj = d.obj
+            if (res.statusCode == 200) {
+              // 上传成功后，把路径set到data 里
+              f.push({
+                "fileCode": e.currentTarget.dataset['index'],
+                "fileName": obj[0].fileRealName,
+                "fileUrl": obj[0].realPath + obj[0].fileRealName
+              })
+            }
+          },
+          fail: res => {
+            that.showToast({
+              title: '上传失败'
+            })
+          }
+        })
+        
+        // 页面预览
         that.setData({
-          imgs: imgs
+          imgs1: imgs1,
+          imgs2: imgs2,
+          imgs3: imgs3,
+          f: f
         });
       }
     })
-    // wx.uploadFile 接口只能一次上传 1 张图片
-    wx.uploadFile({
-      url: api.apiRootUrl + '/distribution/addPicture',   // 后台服务URL
-      filePath: path,   // 微信返回的临时图片地址
-      name: 'file',
-      header: { "Content-Type": "multipart/form-data" },
-      success: res => {					// 上传成功的回调函数
-        if (res.code == 200) {
-          // 上传成功后，把路径set到data 里
-          
-        } else {
-          this.showToast({
-            title: '上传失败'
-          })
-        }
-      }
-    })
-
-
+    console.log("imgs1",that.data.imgs1)
+    console.log("imgs2",that.data.imgs2)
+    console.log("imgs3",that.data.imgs3)
   },
   checkboxChange: function (e) {
 

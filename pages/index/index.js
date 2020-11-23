@@ -10,12 +10,13 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad: function() {
+  onLoad: function () {
+    wx.hideTabBar(true);
     /* http测试
     wx.request({
       url: 'http://adfs.xftm.com:8767/XftmApp/test/schedule',
@@ -61,7 +62,7 @@ Page({
     console.log(e.detail.iv)
     console.log(e.detail.encryptedData)
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -69,28 +70,33 @@ Page({
       hasUserInfo: true
     })
   },
-  toQueryOrder: function(){
+  toQueryOrder: function () {
     // 请求获取数据
-    
+
 
     // 跳转
     wx.navigateTo({
       url: '/pages/queryorder/queryorder'
     })
   },
-  startScan: function(e) {
-    console.log(e);
+  startScan: function (e) {
+    console.log("扫描参数", e);
     wx.scanCode({
       success: (res) => {
-        console.log(res);
+        console.log(res)
+        let r = JSON.parse(res.result)
+        console.log("扫描二维码结果", r.bacjhm);
         this.setData({
           motto: res.result
         })
- 
-        let param = this.data.motto;
-       
-        param = JSON.parse(param);
-         
+        wx.navigateTo({
+          url: '/pages/sweepResult/sweepResult?result=' + r.bacjhm     // 页面 A
+        })
+
+        // let param = this.data.motto;
+
+        // param = JSON.parse(param);
+
         // var par = {
         //   'basqbh': '11111',
         //   'bacjhm': 'xxxxxxx',
@@ -99,38 +105,38 @@ Page({
         // wx.navigateTo({
         //   url: '/pages/sweep/sweep'　　 // 页面 A
         // })
-        wx.request({
-          url: app.globalData.getRealUrl("wxSweepCode"),
-          method: 'POST',
-          dataType: 'json',
-          data: param,
-          header: {
-            'content-type': 'application/x-www-form-urlencoded' // 默认值
-          },
-          success: (sweepRes) => {
-            const data = sweepRes.data;
-            console.log(data);
-            console.log(typeof (data));
+        // wx.request({
+        //   url: app.globalData.getRealUrl("wxSweepCode"),
+        //   method: 'POST',
+        //   dataType: 'json',
+        //   data: param,
+        //   header: {
+        //     'content-type': 'application/x-www-form-urlencoded' // 默认值
+        //   },
+        //   success: (sweepRes) => {
+        //     const data = sweepRes.data;
+        //     console.log(data);
+        //     console.log(typeof (data));
 
-            if(!data.success){
-              app.alert(data.msg);
-              return false;
-            }
-            // const dataObj = data.;
-            // console.log(typeof (dataObj));
-            // console.log(dataObj)
+        //     if(!data.success){
+        //       app.alert(data.msg);
+        //       return false;
+        //     }
+        //     // const dataObj = data.;
+        //     // console.log(typeof (dataObj));
+        //     // console.log(dataObj)
 
- 
-            const obj = data.obj;
-            //车牌
-            const result = obj.bacjhm;
 
-            wx.navigateTo({
-              url: '/pages/sweepResult/sweepResult?type=' + 1 + '&result=' + result　　 // 页面 A
-            })
+        //     const obj = data.obj;
+        //     //车牌
+        //     const result = obj.bacjhm;
 
-          }
-        })
+        //     wx.navigateTo({
+        //       url: '/pages/sweepResult/sweepResult?type=' + 1 + '&result=' + result　　 // 页面 A
+        //     })
+
+        //   }
+        // })
 
       },
       fail: (ress) => {
@@ -140,13 +146,13 @@ Page({
     })
   },
   //扫描车牌号
-  chooseCarPlateimage: function() {
+  chooseCarPlateimage: function () {
     let thit = this;
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['compressed'], // ['original 原图', 'compressed 压缩图']可以指定是原图还是压缩图，默认二者都有
       sourceType: ['camera'], // ['album 相册', 'camera 相机']可以指定来源是相册还是相机，默认二者都有
-      success: function(res) {
+      success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         wx.showToast({
           title: '正在识别...',
@@ -160,13 +166,13 @@ Page({
     })
   },
   //扫描车架号
-  chooseCarVinimage: function() {
+  chooseCarVinimage: function () {
     let thit = this;
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['compressed'], // ['original 原图', 'compressed 压缩图']可以指定是原图还是压缩图，默认二者都有
       sourceType: ['camera'], // ['album 相册', 'camera 相机']可以指定来源是相册还是相机，默认二者都有
-      success: function(res) {
+      success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         wx.showToast({
           title: '正在识别...',
@@ -183,7 +189,7 @@ Page({
 
   },
   // type 1 通用文字扫描 2 扫描车牌
-  uploadImages: function(tempFilePaths, type) {
+  uploadImages: function (tempFilePaths, type) {
     wx.uploadFile({
       url: app.globalData.getRealUrl("uploadImage"), //仅为示例，非真实的接口地址
       filePath: tempFilePaths[0],
@@ -206,7 +212,7 @@ Page({
 
 
   },
-  loginout:function(){
+  loginout: function () {
 
 
     wx.setStorage({

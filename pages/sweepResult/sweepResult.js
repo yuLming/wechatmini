@@ -99,7 +99,7 @@ Page({
     let type = this.data.type;
     let result = this.data.v;
     wx.navigateTo({
-      url: '/pages/sweep/sweep?type=' + type + '&result=' + result　　// 页面 A
+      url: '/pages/sweep/sweep?result=' + result　　// 页面 A
     })
   }
 })

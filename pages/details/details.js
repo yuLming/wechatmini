@@ -5,8 +5,7 @@ Page({
    * 组件的初始数据
    */
   data: {
-    obj: {},
-    code: ""
+    obj: {}
   },
   onLoad: function (options) {
     console.log(options.item)

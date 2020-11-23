@@ -7,7 +7,7 @@
           <view class="item-inner">
             <view class="item-title label">客户姓名</view>
             <view class="item-input">
-              <input name="userName" disabled="true" type="text" value="{{basqbh}}"></input>
+              <input name="userName" disabled="true" type="text" value="{{applyName}}"></input>
             </view>
           </view>
         </view>
@@ -55,7 +55,7 @@
             <view class="item-title label">车系</view>
             <view class="item-input">
               <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-                value="{{userPhone}}"></input>
+                value="{{baclcx}}"></input>
             </view>
           </view>
         </view>
@@ -95,22 +95,23 @@
           <view class="item-inner">
             <view class="item-title label">操作</view>
             <view class="item-input">
-              <checkbox-group name="checkbox" bindchange="checkboxChange">
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{operType}}"></input>
+              <!-- <checkbox-group name="checkbox" bindchange="checkboxChange">
                 <label wx:for="{{actions}}">
                   <checkbox value="{{item.realValue}}" />{{item.name}}</label>
-
-              </checkbox-group>
+              </checkbox-group> -->
             </view>
           </view>
         </view>
 
-        <view style="margin-left: 10%;margin-top: 5%; ">
+        <view style="margin-left: 10%;margin-top: 5%;" wx:if="{{isShow}}">
           <radio-group class="radio-group" bindchange="ifGiveUpChecked">
             <view>
               <text>是否有自愿放弃书</text>
               <view style="float: right; margin-right: 10%">
-                是<radio value="{{true}}"></radio>
-                否<radio value="{{false}}"></radio>
+                是<radio value="是"></radio>
+                否<radio value="否"></radio>
               </view>
             </view>
           </radio-group>
@@ -118,8 +119,8 @@
             <view>
               <text>是否有车钥匙</text>
               <view style="float: right; margin-right: 10%">
-                是<radio value="{{true}}"></radio>
-                否<radio value="{{false}}"></radio>
+                是<radio value="是"></radio>
+                否<radio value="否"></radio>
               </view>
             </view>
           </radio-group>
@@ -127,59 +128,139 @@
             <view>
               <text>是否有行驶证</text>
               <view style="float: right; margin-right: 10%">
-                是<radio value="{{true}}"></radio>
-                否<radio value="{{false}}"></radio>
+                是<radio value="是"></radio>
+                否<radio value="否"></radio>
               </view>
             </view>
           </radio-group>
         </view>
 
-        <!-- <view class="item-content" style="margin-top: 5%">
-          <view wx:for="{{files}}" wx:key="{{index}}" class="item-inner">
-            <view data-index="{{index}}">车辆入库及财物交接单</view>
-            <button class="upload-img-btn" bindtap="uploadImage" type='primary' size="mini">上传</button>
+        <view style="margin-left: 5%" wx:if="{{xtjsdm == 7025}}">
+          <view style="margin-top: 5%">
+            <view>
+              <view>车辆基本状况描述（停车场）</view>
+              <button data-index="5714" class="upload-img-btn" bindtap="uploadImage" type='primary'
+                size="mini">上传</button>
+            </view>
           </view>
-        </view> -->
-        <view  style="margin-top: 5%">
-          <view class="item-inner">
-            <view>车辆入库及财物交接单</view>
-            <button class="upload-img-btn" bindtap="uploadImage" type='primary' size="mini">上传</button>
+          <!-- 预览 -->
+          <view>
+            <view class='pic' wx:for="{{imgs1}}" wx:for-item="item" wx:key="*this">
+              <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" bindtap="previewImg1">
+                <icon style="width: 10%" type='cancel' class="delete-btn" data-index="{{index}}" catchtap="deleteImg1">
+                </icon>
+              </image>
+            </view>
+          </view>
+          <view style="margin-top: 5%">
+            <view>
+              <view>车辆照片（停车场）</view>
+              <button data-index="5716" class="upload-img-btn" bindtap="uploadImage" type='primary'
+                size="mini">上传</button>
+            </view>
+          </view>
+          <!-- 预览 -->
+          <view>
+            <view class='pic' wx:for="{{imgs2}}" wx:for-item="item" wx:key="*this">
+              <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" bindtap="previewImg2">
+                <icon style="width: 10%" type='cancel' class="delete-btn" data-index="{{index}}" catchtap="deleteImg2">
+                </icon>
+              </image>
+            </view>
+          </view>
+          <view style="margin-top: 5%">
+            <view>
+              <view>车辆入库及财物交接单（停车场）</view>
+              <button data-index="5717" class="upload-img-btn" bindtap="uploadImage" type='primary'
+                size="mini">上传</button>
+            </view>
+          </view>
+          <!-- 预览 -->
+          <view>
+            <view class='pic' wx:for="{{imgs3}}" wx:for-item="item" wx:key="*this">
+              <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" bindtap="previewImg3">
+                <icon style="width: 10%" type='cancel' class="delete-btn" data-index="{{index}}" catchtap="deleteImg3">
+                </icon>
+              </image>
+            </view>
           </view>
         </view>
-        <!-- 预览 -->
-        <view class='pic' wx:for="{{imgs}}" wx:for-item="item" wx:key="*this">
-          <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" mode="aspectFill"
-            bindtap="previewImg">
-            <icon style="width: 10%" type='cancel' class="delete-btn" data-index="{{index}}" catchtap="deleteImg">
-            </icon>
-          </image>
+        <view style="margin-left: 5%" wx:if="{{xtjsdm == 7020}}">
+          <view style="margin-top: 5%">
+            <view>
+              <view>车辆回收报告已签（保全公司）</view>
+              <button data-index="5707" class="upload-img-btn" bindtap="uploadImage" type='primary'
+                size="mini">上传</button>
+            </view>
+          </view>
+          <!-- 预览 -->
+          <view>
+            <view class='pic' wx:for="{{imgs1}}" wx:for-item="item" wx:key="*this">
+              <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" bindtap="previewImg1">
+                <icon style="width: 10%" type='cancel' class="delete-btn" data-index="{{index}}" catchtap="deleteImg1">
+                </icon>
+              </image>
+            </view>
+          </view>
+          <view style="margin-top: 5%">
+            <view>
+              <view>车辆入库及财物交接单（保全公司）</view>
+              <button data-index="5708" class="upload-img-btn" bindtap="uploadImage" type='primary'
+                size="mini">上传</button>
+            </view>
+          </view>
+          <!-- 预览 -->
+          <view>
+            <view class='pic' wx:for="{{imgs2}}" wx:for-item="item" wx:key="*this">
+              <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" bindtap="previewImg2">
+                <icon style="width: 10%" type='cancel' class="delete-btn" data-index="{{index}}" catchtap="deleteImg2">
+                </icon>
+              </image>
+            </view>
+          </view>
+          <view style="margin-top: 5%">
+            <view>
+              <view>车辆基本状况描述（保全公司）</view>
+              <button data-index="5709" class="upload-img-btn" bindtap="uploadImage" type='primary'
+                size="mini">上传</button>
+            </view>
+          </view>
+          <!-- 预览 -->
+          <view>
+            <view class='pic' wx:for="{{imgs3}}" wx:for-item="item" wx:key="*this">
+              <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" bindtap="previewImg3">
+                <icon style="width: 10%" type='cancel' class="delete-btn" data-index="{{index}}" catchtap="deleteImg3">
+                </icon>
+              </image>
+            </view>
+          </view>
         </view>
 
+
         <view class="content-block" style="margin:35px 0 5px">
-          <button class="button button-big jmed-active" formType="submit" style="width: 70%;margin:0 auto">确定</button>
+          <button disabled="{{disabled}}" id="queding" class="button button-big jmed-active"
+            formType="submit" style="width: 70%;margin:0 auto">确定</button>
         </view>
       </view>
     </form>
 
     <!-- 模态框 -->
-    <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+    <!-- <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view> -->
     <view class="dialog-box" wx:if="{{showModal}}">
       <view style="font-weight: 700; margin-top: 30rpx">入库车辆信息</view>
       <view class="item-content">
         <view class="item-inner">
-          <view class="item-title label" style="white-space:nowrap;">客户姓名</view>
+          <view class="item-title label">客户姓名</view>
           <view class="item-input">
-            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-              value="{{bacx}}"></input>
+            <input name="mobile" disabled="true" placeholderClass="input-placeholder" value="{{applyName}}"></input>
           </view>
         </view>
       </view>
       <view class="item-content">
         <view class="item-inner">
-          <view class="item-title label" style="white-space:nowrap;">车牌号</view>
+          <view class="item-title label">车牌号</view>
           <view class="item-input">
-            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-              value="{{bacx}}"></input>
+            <input name="mobile" disabled="true" placeholderClass="input-placeholder" value="{{carNo}}"></input>
           </view>
         </view>
       </view>
@@ -187,26 +268,24 @@
         <view class="item-inner">
           <view class="item-title label" style="white-space:nowrap;">车架号</view>
           <view class="item-input">
-            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-              value="{{bacx}}"></input>
+            <input name="mobile" disabled="true" placeholderClass="input-placeholder" value="{{bacjhm}}"></input>
           </view>
         </view>
       </view>
+
       <view class="item-content">
         <view class="item-inner">
           <view class="item-title label" style="white-space:nowrap;">入库日期</view>
           <view class="item-input">
-            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-              value="{{bacx}}"></input>
+            <input name="mobile" disabled="true" placeholderClass="input-placeholder" value="{{atDate}}"></input>
           </view>
         </view>
       </view>
       <view class="item-content">
         <view class="item-inner">
-          <view class="item-title label" style="white-space:nowrap;">入库人员</view>
+          <view class="item-title label">入库人员</view>
           <view class="item-input">
-            <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
-              value="{{bacx}}"></input>
+            <input name="mobile" disabled="true" placeholderClass="input-placeholder" value="{{person}}"></input>
           </view>
         </view>
       </view>
