@@ -2,6 +2,11 @@
 var utilMd5 = require('utils/md5.js');
 
 App({
+  changeData:function(){
+
+    this.onLoad();//最好是只写需要刷新的区域的代码，onload也可，效率低，有点low
+    
+    },
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -19,9 +24,8 @@ App({
         success(res) {
           const latitude = res.latitude
           const longitude = res.longitude
-          console.log(latitude);
-          console.log(longitude);
-
+          console.log(latitude+"精度");
+          console.log(longitude+"维度");
           // wx.openLocation({
           //   latitude,
           //   longitude,
@@ -51,13 +55,21 @@ App({
       })
   },
   globalData: {
-    baseUrl: 'https://tmdh.xftm.com/XftmApp/',
-    testUrl: 'http://testwx.xftm.com/XftmApp/',
-    testGwpUrl: 'https://www.xftmleasing.com:4443/TMDH',    // 刚伟鹏的测试地址
-    baseGwpUrl: 'https://tmdh.xftm.com/TMDH',    // 刚伟鹏的正式地址
+    // baseUrl: 'https://tmdh.xftm.com/XftmApp/',
+    baseUrl: 'http://10.10.40.187:8767/XftmApp/',
+    // baseUrl: 'http://testwx.xftm.com:9050/XftmApp/',//测试环境
+    // testUrl: 'http://testwx.xftm.com/XftmApp/',
+    // testGwpUrl: 'https://www.xftmleasing.com:4443/TMDH',    // 刚伟鹏的测试地址
+    // baseGwpUrl: 'https://tmdh.xftm.com/TMDH',    // 刚伟鹏的正式地址
+    baseGwpUrl: 'http://10.10.40.187:8080/TMDH',    // 本地测试
+    // baseGwpUrl: 'http://116.228.224.60:9509/TMDH',    // 本地测试
+    
     basqbh: '', //申请编号
     bacjhm: '', //车架号
     id: '', //二维码id,
+    urlimage:'',//二维码图片路径
+    latitude:'',//精度
+    longitude:'',//维度
     cardInfo: {
       basqbh: '', //申请编号
       bacjhm: '', //车架号
@@ -66,10 +78,10 @@ App({
       bacx: '', //车型
       carcolor: '', //车颜色
       address: '', //停放位置
-      action: [] //可执行操作
+      action: [], //可执行操作
     }, //汽车信息
     getUserInfo: function () {
-      console.log(wx.getStorageSync('userInfo'));
+      console.log(wx.getStorageSync('userInfo')+"21321321");
       return wx.getStorageSync('userInfo');
     },
 
@@ -79,6 +91,15 @@ App({
       switch (e) {
         case "wxLogin":
           a += "WxCtrl/wxlogin";
+          break;
+        case "getPosition":
+          a += "WxCtrl/getPosition";
+          break;
+        case "park":
+          a += "WxCtrl/park";
+          break;
+        case "queryqrcode":
+          a += "WxCtrl/queryqrcode";
           break;
         case "wxSweepCode":
           a += "WxCtrl/wxSweepCode";
@@ -118,6 +139,14 @@ App({
         // 获取已入库订单列表
         case "queryPutInList":
           b += "/xcx/queryPutInList.action";
+          return b;
+           // 获取未入库订单列表queryList
+          case "queryList":
+          b += "/xcx/queryList.action";
+          return b;
+          //生成二维码调用
+          case "stock":
+          b += "/stock?type=park&oprAcct=";
           return b;
         // 扫码进入操作详情页面
         case "carInfo":

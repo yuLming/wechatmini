@@ -11,7 +11,7 @@
           <view class="item-inner">
             <view class="item-title label" style="float:left;padding-right:5%;">{{name}}:</view>
             <view class="item-input">
-              <input name="userName" type="text" value="{{v}}" style="border-radius:3px;border:1px solid #eee;hight:30px;"></input>
+              <input name="userName" type="text" value="{{v}}" style="border-radius:3px;border:1px solid #eee;hight:30px;" disabled="disabled"></input>
             </view>
           </view>
         </view>

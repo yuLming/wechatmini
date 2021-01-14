@@ -11,15 +11,24 @@
   <button bindtap="toQueryOrder" style="margin-bottom:5%;margin-top:15%">
     入库订单查询
   </button>
-  <button bindtap="startScan" style="margin-bottom:5%;">
+  <button bindtap="startScan" wx:if="{{XTJSID==1000}}" style="margin-bottom:5%;">
     扫描二维码
   </button>
-  <button bindtap="chooseCarVinimage" style="margin-bottom:5%">
+  <!-- <button bindtap="chooseCarVinimage" style="margin-bottom:5%">
     扫描车架
+  </button> -->
+  <button bindtap="qrcode" style="margin-bottom:5%" wx:else="{{XTJSID==704}}">
+    已生成二维码订单
   </button>
-  <button bindtap="chooseCarPlateimage" style="margin-bottom:5%">
+  <button bindtap="qrcode" style="margin-bottom:5%" wx:if="{{XTJSID==1000}}">
+    已操作入库待确认入库订单
+  </button>
+  <button bindtap="toOrder" wx:if="{{XTJSID==704}}"style="margin-bottom:5%">
+    车辆未入库订单
+  </button>
+  <!-- <button bindtap="chooseCarPlateimage" style="margin-bottom:5%">
     扫描车牌
-  </button>
+  </button> -->
    <button bindtap="loginout">
     退出登陆
   </button>

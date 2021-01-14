@@ -1,0 +1,18 @@
+<view class="app-page">
+  <view class='table'>
+    <view class="tr bg-w">
+      <view class="th">客户姓名</view>
+      <view class="th">单号</view>
+      <view class="th">车牌号</view>
+      <view class="th">操作</view>
+    </view>
+  </view>
+  <block wx:for="{{listData}}" wx:key="item">
+    <view class="tr">
+      <view class="td">{{item.basqxm}}</view>
+       <view class="td">{{item.ociBasqbh}}</view>
+       <view class="td">{{item.bacphm}}</view>
+       <view class="td details" data-index="{{item}}" bindtap="buttonTap">查看二维码</view> 
+    </view>
+  </block>
+</view>

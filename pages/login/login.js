@@ -45,12 +45,17 @@ Page({
       },
       success: (loginRes) => {
         console.log(loginRes);
-
-        
+        console.log(loginRes.data);
         if (loginRes.data.success){
           console.log('登录成功')
           wx.switchTab({
-            url: '/pages/index/index'　　// 页面 A
+            url: '/pages/index/index',　// 页面 A
+            success: function (e) {
+              var page = getCurrentPages().pop();
+              console.log(page);
+              if (page == undefined || page == null) return;
+              page.onLoad();
+            }
           })
           wx.setStorage({
             key: 'userInfo',

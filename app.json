@@ -5,9 +5,13 @@
     "pages/queryorder/queryorder",
     "pages/index/index",
     "pages/details/details",
-    
-    
-
+    "pages/park/park",
+    "pages/park/inder",
+    "pages/park/inderdatils",
+    "pages/park/qrcode",
+    "pages/detailspark/detailspark",
+    "pages/orderdetails/orderdetails",
+    "pages/order/order",
     "pages/logs/logs",
     "pages/sweepLogs/sweepLogs",
     "pages/sweepResult/sweepResult"

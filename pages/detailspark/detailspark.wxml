@@ -1,0 +1,85 @@
+<view class="app-page">
+  <view class="page-content">
+    <form>
+      <view class="list-block">
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label">停车场名称</view>
+            <view class="item-input">
+              <input name="userName" disabled="true" type="text" value="{{obj.sctcmc}}"></input>
+            </view>
+          </view>
+        </view>
+
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label">停车场省份</view>
+            <view class="item-input">
+              <input name="userName" disabled="true" type="text" value="{{obj.sctcsf}}"></input>
+            </view>
+          </view>
+        </view>
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label">市</view>
+            <view class="item-input">
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{obj.sctccs}}"></input>
+            </view>
+          </view>
+        </view>
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label">联系人员</view>
+            <view class="item-input">
+              <input name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{obj.sctcry}}"></input>
+            </view>
+          </view>
+        </view>
+
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label">电话</view>
+            <view class="item-input">
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{obj.scrydh}}"></input>
+            </view>
+          </view>
+        </view>
+
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label">停车场地址</view>
+            <view class="item-input">
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{obj.sctcdz}}"></input>
+            </view>
+          </view>
+        </view>
+
+
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label">距离(千米)</view>
+            <view class="item-input">
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{obj.distance}}">
+              </input>
+            </view>
+          </view>
+        </view>
+
+        <view class="item-content">
+          <view class="item-inner">
+            <view class="item-title label">启用标志</view>
+            <view class="item-input">
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{obj.scqybz}}"></input>
+            </view>
+          </view>
+        </view>
+      </view>
+    </form>
+  </view>
+</view>

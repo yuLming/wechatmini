@@ -95,6 +95,23 @@ Page({
             }
           })
         }
+        /**
+         * 重复入库操作
+         */
+        // if(res.data.data.applyName=="1"){
+        //   wx.showModal({
+        //     title: '注意',
+        //     content: '车辆已入库，请勿重复操作',
+        //     showCancel: false,
+        //     success(res) {
+        //       if (res.confirm) {
+        //         wx.switchTab({
+        //           url: '/pages/index/index'　　// 页面 A
+        //         })
+        //       }
+        //     }
+        //   }) 
+        // }
         const obj = res.data.data;
         this.setData({
           scrwid: obj.scrwid,
@@ -274,7 +291,8 @@ Page({
       "ifGiveUp": this.data.ifGiveUp,
       "ifKeyToCar": this.data.ifKeyToCar,
       "ifXSZ": this.data.ifXSZ,
-      "files": this.data.f
+      "files": this.data.f,
+      "basqbh":this.data.basqbh
     };
     wx.request({
       url: app.globalData.getRealUrl("scanSubmit"),

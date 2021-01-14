@@ -1,0 +1,19 @@
+<view class="app-page">
+  <view class='table'>
+    <view class="tr bg-w">
+      <view class="th">名称</view>
+      <view class="th">联系人员</view>
+      <view class="th">电话</view>
+      <view class="th">操作</view>
+    </view>
+  </view>
+  <block wx:for="{{result}}" wx:key="item">
+    <view class="tr">
+       <view class="td">{{item.sctcmc}}</view>
+       <view class="td">{{item.scrydh}}</view>
+       <view class="td details" data-index="{{item}}" bindtap="toDetails">详情</view>
+       <view class="td details" data-index="{{item}}" bindtap="to">生成二维码</view>
+       
+    </view>
+  </block>
+</view>

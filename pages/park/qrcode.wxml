@@ -1,0 +1,2 @@
+<!-- <image style="width: 450px; height: 600px; background-color: #eeeeee;" src="{{path}}" mode="scaleToFill"bindtap="changan" ></image> -->
+<image style="width:94.5%; background-color: #eeeeee;" src="{{path}}" mode="widthFix"bindtap="changan" ></image>
