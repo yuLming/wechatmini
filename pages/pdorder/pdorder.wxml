@@ -1,0 +1,19 @@
+<view class="app-page">
+  <view class='table'>
+    <view class="tr bg-w">
+      <view class="th">车牌号</view>
+      <view class="th">状态</view>
+      <view class="th">操作</view>
+
+    </view>
+  </view>
+  
+  <block wx:for="{{listData}}" wx:key="item">
+    <view class="tr" style="font-size:15px;">
+      <view class="td">{{item.CAR_NO}}</view>
+      <view class="td">{{item.STATUS}}</view>
+      <view class="td details" wx:if="{{item.STATUS=='待盘点'}}" bindtap="startScan" >扫码</view>
+      <view class="td" wx:if="{{item.STATUS!='待盘点'}}" ></view>
+    </view>
+  </block>
+</view>

@@ -8,12 +8,10 @@ Page({
     obj: {}
   },
   onLoad: function (options) {
-    console.log(options.item)
     let obj = JSON.parse(options.item); 
     this.setData({
       obj: obj
     })
 
-    console.log("options.applyId===", this.data.obj)
   }
 })

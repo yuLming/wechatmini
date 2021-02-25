@@ -1,4 +1,4 @@
-// pages/sweep/sweep.js
+// pages/cksweep/cksweep.js
 const app = getApp();
 
 Page({
@@ -14,7 +14,9 @@ Page({
     person: '',   // 入库人员
     f: [],
     operType: '',   // 操作
-    scrwid: '',
+    scrwid: '',//放位置,
+    carNo: '',//车牌号
+    //可执行操作
     ifGiveUp: '',     // 是否有自愿放弃书
     ifKeyToCar: '',   // 是否有车钥匙
     ifXSZ: '',        // 是否有行驶证
@@ -22,7 +24,6 @@ Page({
     files: [],          // 接收文件单子
     imgs1: [],   // 存放图片
     imgs2: [],   // 存放图片
-    imgs3: [],   // 存放图片
     applyName: '',  // 客户姓名
     basqbh: '', //申请编号
     bacjhm: '', //车架号
@@ -30,14 +31,16 @@ Page({
     baclcx: '', //车系
     bacx: '', //车型
     carcolor: '', //车颜色
-    address: '', //停放位置,
-    carNo: '',//车牌号
-    //可执行操作
+    address: '', //停
+    tcrName: '',
+    tcrPhone: '',
     actions: [],
     type: "",
     result: "",
     user: '',
-    checkBoxList: []//被选中的checkbox
+    checkBoxList: [],//被选中的checkbox
+    name: '',
+    phone: ''
   },
 
   /**
@@ -61,7 +64,7 @@ Page({
       })
     }
     const param = {
-      "type": '1',
+      "type": '2',
       // "condition": result,
       // "user": appUserInfo.XTCZDM
 
@@ -123,7 +126,9 @@ Page({
           address: obj.stopSite, //停放位置
           carNo: obj.carNumber,   // 车牌
           files: obj.files,   // 接收文件单子
-          operType: obj.operType
+          operType: obj.operType,
+          name:obj.tcrName,//提车人姓名
+          phone: obj.tcrPhone//提车人电话
         })
         const actions = obj.actions;
         this.setData({ actions: [] })
@@ -143,21 +148,7 @@ Page({
       }
     })
   },
-  ifGiveUpChecked: function (e) {
-    this.setData({
-      ifGiveUp: e.detail.value
-    })
-  },
-  ifKeyToCarChecked: function (e) {
-    this.setData({
-      ifKeyToCar: e.detail.value
-    })
-  },
-  ifXSZChecked: function (e) {
-    this.setData({
-      ifXSZ: e.detail.value
-    })
-  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -206,21 +197,44 @@ Page({
   onShareAppMessage: function () {
 
   },
+  setName: function (e) {
+    this.setData({
+      name: e.detail.value
+    })
+  },
+  setPhone: function (e) {
+    this.setData({
+      phone: e.detail.value
+    })
+  },
   operaCarStock: function () {
+    console.log(123)
+   
+var myreg = /^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
     let time = new Date();
     let date = time.toLocaleDateString()
     this.setData({
       atDate: date
     })
-    // 这里加上
-    if (this.data.isShow == true) {
-      if (!this.data.ifGiveUp || !this.data.ifKeyToCar || !this.data.ifXSZ) {
-        app.alert("别忘记选择按钮")
-        return false
-      }
+   
+    
+    if (this.data.name.length==0) {
+      app.alert("请输入提车人姓名");
+        return false;
+    }
+    if (this.data.phone.length==0) {
+      app.alert("请输入提车人电话");
+        return false;
+    }else if (this.data.phone.length<11) {
+      app.alert("请输入正确手机号码");
+        return false;
+    }else if(!myreg.test(this.data.phone)){
+      app.alert("手机号格式不正确");
+      return false;
+
     }
     const l = this.data.f
-    if (l.length < 3) {
+    if (l.length < 2) {
       app.alert("别忘记上传图片");
       return false;
     }
@@ -229,78 +243,54 @@ Page({
       let files = l[k]
       str += files.fileCode + ","
     }
-
-    if (this.data.xtjsdm == "7025") {
-      if (str.indexOf("5714") == -1) {
-        app.alert("别忘记上传车辆基本状况描述");
-        return false;
-      } else if (str.indexOf("5716") == -1) {
-        app.alert("别忘记上传车辆照片");
-        return false;
-      } else if (str.indexOf("5717") == -1) {
-        app.alert("别忘记上传车辆入库及财务交接单");
-        return false;
-      }
-      if (this.data.imgs1.length < 1) {
-        app.alert("别忘记上传车辆基本状况描述");
-          return false;
-      }
-      if (this.data.imgs2.length < 1) {
-        app.alert("别忘记上传车辆照片");
-          return false;
-      }
-      if (this.data.imgs3.length < 1) {
-        app.alert("别忘记上传车辆入库及财务交接单");
-          return false;
-      }
-    } else {
-      if (str.indexOf("5707") == -1) {
-        app.alert("别忘记上传车辆回收报告");
-        return false;
-      } else if (str.indexOf("5708") == -1) {
-        app.alert("别忘记上传车辆入库及财务交接单");
-        return false;
-      } else if (str.indexOf("5709") == -1) {
-        app.alert("别忘记上传车辆基本状况描述");
-        return false;
-      }
-      if (this.data.imgs1.length < 1) {
-        app.alert("别忘记上传车辆回收报告");
-          return false;
-      }
-      if (this.data.imgs2.length < 1) {
-        app.alert("别忘记上传车辆入库及财务交接单");
-          return false;
-      }
-      if (this.data.imgs3.length < 1) {
-        app.alert("别忘记上传车辆基本状况描述");
-          return false;
-      }
+  //验证图片信息
+    if (str.indexOf("6503") == -1) {
+      app.alert("别忘记上传人车合影");
+      return false;
+    } else if (str.indexOf("6502") == -1) {
+      app.alert("别忘记上传出库单");
+      return false;
     }
-
+    if (this.data.imgs1.length < 1) {
+      app.alert("别忘记上传人车合影");
+        return false;
+    }
+    if (this.data.imgs2.length < 1) {
+      app.alert("别忘记上传出库单");
+        return false;
+    }
+   
+  
     const param = {
-      "scrwid": this.data.scrwid,
-      "user": this.data.user,
-      "ifGiveUp": this.data.ifGiveUp,
-      "ifKeyToCar": this.data.ifKeyToCar,
-      "ifXSZ": this.data.ifXSZ,
+      "type": 'stockOutput',
+      "oprAcct": this.data.user,
       "files": this.data.f,
-      "basqbh":this.data.basqbh
+      "basqbh":this.data.basqbh,
+      "frameNo": this.data.bacjhm,
+      "name": this.data.name,
+      "phone": this.data.phone
     };
+ 
     wx.request({
-      url: app.globalData.getRealUrl("scanSubmit"),
-      method: 'POST',
+      url: app.globalData.getRealUrl("ckScanSubmit"),
+      method: 'GET',
       dataType: 'json',
       data: param,
       header: {
         'content-type': 'application/json;charset=UTF-8' // 默认值
       },
       success: (res) => {
-        if (res.data.code == '0000') {
+        if (res.data.code == 100) {
           this.setData({
             showModal: true,
             disabled: true
           })
+      //      wx.showModal({
+      //   title: '注意',
+      //   content: '出库成功',
+      //   showCancel: false,
+       
+      // })
         } else {
           app.alert(res.data.message);
         }
@@ -388,7 +378,6 @@ Page({
     var that = this;
     var imgs1 = that.data.imgs1;
     var imgs2 = that.data.imgs2;
-    var imgs3 = that.data.imgs3;
     
     // var o
     let imagePaths
@@ -398,7 +387,8 @@ Page({
       sourceType: ['camera'],
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-    
+        
+      
         imagePaths = res.tempFilePaths;
 
         const f = that.data.f
@@ -419,20 +409,17 @@ Page({
                 "fileName": obj[0].fileRealName,
                 "fileUrl": obj[0].realPath + obj[0].fileRealName
               })
-              if(e.currentTarget.dataset['index'] == "5714" || e.currentTarget.dataset['index'] == "5707"){
+              if(e.currentTarget.dataset['index'] == "6503" || e.currentTarget.dataset['index'] == "6503"){
                 imgs1.push(obj[0].path);
               }
-              if(e.currentTarget.dataset['index'] == "5716" || e.currentTarget.dataset['index'] == "5708"){
+              if(e.currentTarget.dataset['index'] == "6502" || e.currentTarget.dataset['index'] == "6502"){
                 imgs2.push(obj[0].path);
               }
-              if(e.currentTarget.dataset['index'] == "5717" || e.currentTarget.dataset['index'] == "5709"){
-                imgs3.push(obj[0].path);
-              }
+             
               // 页面预览
               that.setData({
                 imgs1: imgs1,
                 imgs2: imgs2,
-                imgs3: imgs3,
                 f: f
               });
 

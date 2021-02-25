@@ -33,12 +33,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   console.log(options.vehicleIdentifyNum);
-    console.log(options.res);
     var result = JSON.parse(options.res);
     this.data.bacjhm=options.vehicleIdentifyNum;
-    console.log(this.data.bacjhm);
-    console.log(result[0]);
     this.setData({
       result:result,
     })
@@ -98,7 +94,6 @@ Page({
   toDetails: function (e) {
     
     const item = JSON.stringify(e.currentTarget.dataset['index']);
-    console.log(item+"信息");
     // 跳转详情页面
     wx.navigateTo({
       url: '/pages/detailspark/detailspark?item='+item
@@ -107,7 +102,6 @@ Page({
   to:function(e){
     var that=this;
     var s=e.currentTarget.dataset['index'];
-            console.log(s.sctcid+"测试数据");
             this.data.sctcid=s.sctcid;
     wx.showModal({
       title: '提示',
@@ -115,7 +109,6 @@ Page({
       success: function (e) {
         if (e.confirm) {
             // 用户点击了确定 
-            console.log("客户点击了");
             that.toPark();
           } else if (e.cancel) {
           }
@@ -124,9 +117,7 @@ Page({
   },
     toPark:function(){
     var parm=this.data.sctcid;
-    console.log(parm)
     const appUserInfo = app.globalData.getUserInfo();
-    console.log(this.data.bacjhm)
     param=this.data.bacjhm
     wx.showToast({
       title: '正在生成二维码，请稍等',
@@ -145,11 +136,8 @@ Page({
       },
       success: (res) => {
         var result = JSON.stringify(res.data)
-        console.log("返回数据", result) 
         var pages =getCurrentPages();//当前页面栈
-        console.log(pages+"页面数");
         var beforePage = pages[pages.length- 2];
-        console.log(beforePage);
         beforePage.changeData();
         wx.showModal({
           title: '提示',
@@ -157,7 +145,6 @@ Page({
           success: function (e) {
             if (e.confirm) {
                 // 用户点击了确定 
-                console.log("客户点击了");
                 wx.redirectTo({
                   url: 'inder',
                 })

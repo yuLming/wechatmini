@@ -32,16 +32,13 @@ Page({
     })
     */
    const appUserInfo = app.globalData.getUserInfo();
-    console.log(appUserInfo.XTJSID+"fds");
     this.setData({
       XTJSID:app.globalData.getUserInfo().XTJSID
     })
 
     
     if (app.globalData.userInfo) {
-      console.log(app.globalData.userInfo+"index数据页面")
       const appUserInfo = app.globalData.getUserInfo();
-      console.log(appUserInfo.XTJSID+"fds");
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true,
@@ -68,14 +65,12 @@ Page({
         }
       })
     }
+    getUserInfo();
+
   },
   getPhoneNumber(e) {
-    console.log(e.detail.errMsg)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
   },
   getUserInfo: function (e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -91,6 +86,27 @@ Page({
       url: '/pages/queryorder/queryorder'
     })
   },
+  //跳转到待出库订单
+  toCkQueryOrder: function () {
+    // 跳转
+    wx.navigateTo({
+      url: '/pages/queryckorder/queryckorder'
+    })
+  },
+    //跳转到已出库订单
+    toCkQueryOrder2: function () {
+      // 跳转
+      wx.navigateTo({
+        url: '/pages/queryyckorder/queryyckorder'
+      })
+    },
+    //跳转到盘点列表
+    toPdOredr1: function () {
+      // 跳转
+      wx.navigateTo({
+        url: '/pages/pdbatch/pdbatch'
+      })
+    },
   toOrder: function () {
     // 请求获取数据
 
@@ -118,12 +134,9 @@ Page({
     })  
   },
   startScan: function (e) {
-    console.log("扫描参数", e);
     wx.scanCode({
       success: (res) => {
-        console.log(res)
         let r = JSON.parse(res.result)
-        console.log("扫描二维码结果", r.bacjhm);
         this.setData({
           motto: res.result
         })

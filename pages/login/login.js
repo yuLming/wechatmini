@@ -16,7 +16,6 @@ Page({
 
   },
   pwdHandle :function(e){
-    console.log(e);
     this.setData({
        
       userPwd: app.getMD5String(e.detail.value).toUpperCase()
@@ -32,8 +31,6 @@ Page({
         'userName': this.data.userName,
         'pwd': this.data.userPwd 
       }
-    console.log(loginParam);
-    console.log(typeof (loginParam));
     app.getClientInfo();
     wx.request({
       url: app.globalData.getRealUrl("wxLogin"),
@@ -44,15 +41,11 @@ Page({
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       success: (loginRes) => {
-        console.log(loginRes);
-        console.log(loginRes.data);
         if (loginRes.data.success){
-          console.log('登录成功')
           wx.switchTab({
             url: '/pages/index/index',　// 页面 A
             success: function (e) {
               var page = getCurrentPages().pop();
-              console.log(page);
               if (page == undefined || page == null) return;
               page.onLoad();
             }
@@ -77,7 +70,6 @@ Page({
   onLoad: function (options) {
      //从缓存获取用户信息
     var appUserInfo = app.globalData.getUserInfo();
-    console.log(appUserInfo);
     if (appUserInfo == '' || appUserInfo ==null){
       return ; 
     }else{

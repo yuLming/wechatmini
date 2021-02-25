@@ -15,12 +15,10 @@ Page({
    */
   onLoad: function (options) {
     const appUserInfo = app.globalData.getUserInfo();
-    console.log(appUserInfo.XTJSID+"fds");
     const param = {
       "username": appUserInfo.XTCZDM,
       "xtjsid":appUserInfo.XTJSID
     };
-    console.log("参数",appUserInfo)
     wx.request({
       // 请求入库订单查询列表路径
       url: app.globalData.getRealUrl("queryqrcode"),
@@ -31,7 +29,6 @@ Page({
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       success: (res) => {
-        console.log("订单列表",res.data.obj);
         this.setData({
           listData: res.data.obj
         })

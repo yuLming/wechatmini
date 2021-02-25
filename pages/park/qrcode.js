@@ -12,16 +12,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.item+"ceshi");
     var options=JSON.parse(decodeURIComponent(options.item))
-    console.log(options.ociRealPath+"ceshi1212");
 
     this.setData({
       path: options.ociRealPath,
       bacjhm:options.ociBacjhm
     })
-    console.log(this.data.path)
-    console.log(this.data.bacjhm)
   },
 
   /**
@@ -84,21 +80,17 @@ Page({
       itemList: ['识别二维码进行入库操作', '保存图片'],
       success: function (res) {
         if (!res.cancel) {
-          console.log(res.tapIndex)//这里是点击了那个按钮的下标
           if(res.tapIndex==0){
-            console.log(that.data.bacjhm);
             wx.showModal({
               title: '注意',
               content: '是否要进行入库操作',
               success:function(res){
                 if (res.confirm) {//这里是点击了确定以后
-                  console.log('用户点击确定')
                   //跳页面直接传值，进行入库操作
                   wx.redirectTo({
                      url: '/pages/sweepResult/sweepResult?result='+that.data.bacjhm,
                   })
                 } else {//这里是点击了取消以后
-                  console.log('用户点击取消')
                 }
               }
             })

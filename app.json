@@ -2,6 +2,7 @@
   "pages": [
     "pages/login/login",
     "pages/sweep/sweep",
+    "pages/carInfo/carInfo",
     "pages/queryorder/queryorder",
     "pages/index/index",
     "pages/details/details",

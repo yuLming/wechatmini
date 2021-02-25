@@ -1,17 +1,11 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
   </view>
- 
-  <button bindtap="toQueryOrder" style="margin-bottom:5%;margin-top:15%">
-    入库订单查询
-  </button>
-  <button bindtap="startScan" wx:if="{{XTJSID==1000}}" style="margin-bottom:5%;">
+  <button bindtap="startScan" wx:if="{{XTJSID==1000}}" 
+  style="margin-bottom:5%;">
     扫描二维码
   </button>
   <!-- <button bindtap="chooseCarVinimage" style="margin-bottom:5%">
@@ -26,6 +20,22 @@
   <button bindtap="toOrder" wx:if="{{XTJSID==704}}"style="margin-bottom:5%">
     车辆未入库订单
   </button>
+  <button bindtap="toQueryOrder" style="margin-bottom:5%;">
+    入库订单查询
+  </button>
+  <button bindtap="toCkQueryOrder" wx:if="{{XTJSID==1000}}" 
+  style="margin-bottom:5%;">
+    待出库订单
+  </button>
+  <button bindtap="toCkQueryOrder2" wx:if="{{XTJSID==1000}}" 
+  style="margin-bottom:5%;">
+    已出库订单
+  </button>
+  <button bindtap="toPdOredr1" wx:if="{{XTJSID==1000}}" 
+  style="margin-bottom:5%;">
+    盘点列表
+  </button>
+  
   <!-- <button bindtap="chooseCarPlateimage" style="margin-bottom:5%">
     扫描车牌
   </button> -->

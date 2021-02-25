@@ -30,11 +30,8 @@ Page({
       success(res) {
         const latitude = res.latitude
         const longitude = res.longitude
-        console.log(latitude+"精度");
-        console.log(longitude+"维度");
         app.globalData.latitude=latitude;
         app.globalData.longitude=longitude;
-        console.log(app.globalData.longitude);
         // wx.openLocation({
         //   latitude,
         //   longitude,
@@ -47,7 +44,6 @@ Page({
     const param = {
       "user": appUserInfo.XTCZDM
     };
-    console.log("参数",appUserInfo)
     wx.request({
       // 请求入库订单查询列表路径
       url: app.globalData.getRealUrl("queryList"),
@@ -58,7 +54,6 @@ Page({
         'content-type': 'application/json;charset=UTF-8' // 默认值
       },
       success: (res) => {
-        console.log("订单列表",res.data);
         this.setData({
           listData: res.data.data
         })
@@ -79,9 +74,6 @@ Page({
   //获取停车场
   nextStep1: function (e) {
     const item = e.currentTarget.dataset['index']
-    console.log(item+"车架号")
-    console.log(app.globalData.latitude+"精度")
-    console.log(app.globalData.longitude+"维度")
 
     
     param={
@@ -89,7 +81,6 @@ Page({
       latitude:app.globalData.latitude,
       longitude:app.globalData.longitude
     }
-    console.log(param.vehicleIdentifyNum+"车架号");
     wx.request({
       // url: app.globalData.getRealUrl("queryCarInfo"),    // 改成刚伟鹏的新的接口
       url: app.globalData.getRealUrl("getPosition"),
@@ -101,7 +92,6 @@ Page({
       },
       success: (res) => {
         var result = JSON.stringify(res.data.obj)
-        console.log("返回数据", res) 
         if (res.data.obj == "" || res.data.obj==undefined) {
           wx.showModal({
             title: '注意',

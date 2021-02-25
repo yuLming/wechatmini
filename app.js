@@ -24,8 +24,6 @@ App({
         success(res) {
           const latitude = res.latitude
           const longitude = res.longitude
-          console.log(latitude+"精度");
-          console.log(longitude+"维度");
           // wx.openLocation({
           //   latitude,
           //   longitude,
@@ -55,15 +53,10 @@ App({
       })
   },
   globalData: {
-    // baseUrl: 'https://tmdh.xftm.com/XftmApp/',
-    baseUrl: 'http://10.10.40.187:8767/XftmApp/',
-    // baseUrl: 'http://testwx.xftm.com:9050/XftmApp/',//测试环境
-    // testUrl: 'http://testwx.xftm.com/XftmApp/',
-    // testGwpUrl: 'https://www.xftmleasing.com:4443/TMDH',    // 刚伟鹏的测试地址
-    // baseGwpUrl: 'https://tmdh.xftm.com/TMDH',    // 刚伟鹏的正式地址
-    baseGwpUrl: 'http://10.10.40.187:8080/TMDH',    // 本地测试
-    // baseGwpUrl: 'http://116.228.224.60:9509/TMDH',    // 本地测试
-    
+    baseUrl: 'https://tmdh.xftm.com/XftmApp/',
+    testUrl: 'http://localhost:8888/XftmApp/',
+    testGwpUrl: 'http://116.228.224.60:9509/TMDH/',    // 刚伟鹏的测试地址
+    baseGwpUrl: 'https://tmdh.xftm.com/TMDH',    // 刚伟鹏的正式地址
     basqbh: '', //申请编号
     bacjhm: '', //车架号
     id: '', //二维码id,
@@ -81,13 +74,12 @@ App({
       action: [], //可执行操作
     }, //汽车信息
     getUserInfo: function () {
-      console.log(wx.getStorageSync('userInfo')+"21321321");
       return wx.getStorageSync('userInfo');
     },
 
     getRealUrl: function (e) {
-      var a = this.baseUrl;
-      var b = this.baseGwpUrl;
+      var a = this.testUrl;
+      var b = this.testGwpUrl;
       switch (e) {
         case "wxLogin":
           a += "WxCtrl/wxlogin";
@@ -129,16 +121,28 @@ App({
         case "baseUpload":
           a += "FileCtrl/baseUploadFileOneToDh";
           break;
-        // 之前的接口
-        // case "queryCarInfo":
-        //   a += "/WxCtrl/queryCarStockInfo";
-        //   break;
-        // case "sumbitKcActions":
-        //   a += "/WxCtrl/sumbitKcActions";
-        //   break;
-        // 获取已入库订单列表
+        之前的接口
+        case "queryCarInfo":
+          a += "/WxCtrl/queryCarStockInfo";
+          break;
+        case "sumbitKcActions":
+          a += "/WxCtrl/sumbitKcActions";
+          break;
+          break;
+          case "sumbitPdActions":
+            a += "/WxCtrl/sumbitPdActions";
+            break;
+        获取已入库订单列表
         case "queryPutInList":
           b += "/xcx/queryPutInList.action";
+          return b;
+          获取待出库订单列表
+        case "queryOutInList":
+          b += "/xcx/queryOutInList.action";
+          return b;
+        获取已出库订单列表
+        case "queryyOutInList":
+          b += "/xcx/queryyOutInList.action";
           return b;
            // 获取未入库订单列表queryList
           case "queryList":
@@ -156,7 +160,16 @@ App({
         case "scanSubmit":
           b += "/xcx/scanSubmit.action";
           return b;
+          //出库提交
+        case "ckScanSubmit":
+          b += "/stock";
+          return b;
+          //盘点列表
+          case "queryStockTaskList":
+            b += "/xcx/queryStockTaskList.action";
+            return b;
       }
+      
 
       return a;
     }
@@ -195,7 +208,6 @@ App({
       url: 'http://ip-api.com/json',
       success: function (e) {
 
-        console.log(e.data);
 
       }
     })

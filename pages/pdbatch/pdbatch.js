@@ -20,11 +20,12 @@ Page({
   onLoad: function (options) {
     const appUserInfo = app.globalData.getUserInfo();
     const param = {
-      "user": appUserInfo.XTCZDM
+      "user": appUserInfo.XTCZDM,
+      "jsId": appUserInfo.XTJSID
     };
     wx.request({
-      // 请求入库订单查询列表路径
-      url: app.globalData.getRealUrl("queryPutInList"),
+      // 盘点列表路径
+      url: app.globalData.getRealUrl("queryStockTaskList"),
       method: 'GET',
       dataType: 'json',
       data: param,
@@ -53,16 +54,9 @@ Page({
       }
     })
   },
-
-  toDetails: function (e) {
-    
-    const item = JSON.stringify(e.currentTarget.dataset['index'])
-    // 跳转详情页面
+  toPdOrder: function (params) {
     wx.navigateTo({
-      url: '/pages/details/details?item='+item
+      url: '/pages/pdorder/pdorder?taskId='+params.currentTarget.dataset.index.TASK_ID
     })
-
-
   }
-
 })

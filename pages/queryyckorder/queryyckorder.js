@@ -24,7 +24,7 @@ Page({
     };
     wx.request({
       // 请求入库订单查询列表路径
-      url: app.globalData.getRealUrl("queryPutInList"),
+      url: app.globalData.getRealUrl("queryyOutInList"),
       method: 'GET',
       dataType: 'json',
       data: param,

@@ -73,7 +73,9 @@
 
         <view class="item-content">
           <view class="item-inner">
-            <view class="item-title label">入库日期</view>
+            <view class="item-title label" wx:if="{{obj.putIn=='已入库'}}">入库日期</view>
+            <view class="item-title label" wx:else="{{obj.putIn==''}}">出库日期</view>
+
             <view class="item-input">
               <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
                 value="{{obj.putInDate}}"></input>
