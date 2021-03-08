@@ -54,7 +54,8 @@ App({
   },
   globalData: {
     baseUrl: 'https://tmdh.xftm.com/XftmApp/',
-    testUrl: 'http://localhost:8888/XftmApp/',
+    testUrl: 'http://testwx.xftm.com:9050/XftmApp/',
+
     testGwpUrl: 'http://116.228.224.60:9509/TMDH/',    // 刚伟鹏的测试地址
     baseGwpUrl: 'https://tmdh.xftm.com/TMDH',    // 刚伟鹏的正式地址
     basqbh: '', //申请编号

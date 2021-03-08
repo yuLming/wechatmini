@@ -24,6 +24,7 @@ Page({
     files: [],          // 接收文件单子
     imgs1: [],   // 存放图片
     imgs2: [],   // 存放图片
+    imgs3: '',   // 存放图片
     applyName: '',  // 客户姓名
     basqbh: '', //申请编号
     bacjhm: '', //车架号
@@ -40,7 +41,8 @@ Page({
     user: '',
     checkBoxList: [],//被选中的checkbox
     name: '',
-    phone: ''
+    phone: '',
+    czrq: ''
   },
 
   /**
@@ -128,8 +130,16 @@ Page({
           files: obj.files,   // 接收文件单子
           operType: obj.operType,
           name:obj.tcrName,//提车人姓名
-          phone: obj.tcrPhone//提车人电话
+          phone: obj.tcrPhone,//提车人电话
+          czrq: obj.czrq,//处置日期
+          imgs3: obj.sfzlj//身份证预览地址
         })
+        // f.push({
+        //   "fileCode": e.currentTarget.dataset['index'],
+        //   "fileName": obj[0].fileRealName,
+        //   "fileUrl": obj[0].realPath + obj[0].fileRealName
+        // })
+        // this.imgs3.push(obj.sfzlj);
         const actions = obj.actions;
         this.setData({ actions: [] })
         const dataAction = [];

@@ -109,7 +109,9 @@
           <view class="item-inner">
             <view class="item-title label">提车人姓名</view>
             <view class="item-input">
-              <input class="weui-input" placeholder="请输入提车人姓名" bindinput="setName" id="name" value="{{name}}"></input>
+              <!-- <input class="weui-input" placeholder="请输入提车人姓名" bindinput="setName" id="name" value="{{name}}"></input> -->
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{name}}"></input>
             </view>
           </view>
         </view>
@@ -118,11 +120,22 @@
           <view class="item-inner">
             <view class="item-title label">提车人电话</view>
             <view class="item-input">
-              <input class="weui-input" maxlength="11" placeholder="请输入提车人姓电话" type="number" bindinput="setPhone" id="phone" value="{{phone}}"></input>
+              <!-- <input class="weui-input" maxlength="11" placeholder="请输入提车人姓电话" type="number" bindinput="setPhone" id="phone" value="{{phone}}"></input> -->
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{phone}}"></input>
             </view>
           </view>
         </view>
-
+        <!-- 处置时间 -->
+        <view class="item-content">
+                  <view class="item-inner">
+                    <view class="item-title label">处置时间</view>
+                    <view class="item-input">
+              <input maxlength="11" name="mobile" disabled="true" placeholderClass="input-placeholder" type="number"
+                value="{{czrq}}"></input>
+            </view>
+          </view>
+        </view>
         
 
         <view style="margin-left: 5%">
@@ -160,21 +173,19 @@
             </view>
           </view>
           
-          <!-- <view style="margin-top: 5%">
+        <view style="margin-top: 5%">
             <view>
               <view>提车人身份证照片</view>
-              <button data-index="6504" class="upload-img-btn" bindtap="uploadImage" type='primary'
-                size="mini">上传</button>
             </view>
-          </view>
+          </view> 
           <view>
-            <view class='pic' wx:for="{{imgs3}}" wx:for-item="item" wx:key="*this">
-              <image class='weui-uploader__img' src="{{item}}" data-index="{{index}}" bindtap="previewImg3">
+            <view class='pic'>
+              <image class='weui-uploader__img' src="{{imgs3}}" data-index="{{index}}" bindtap="previewImg3">
                 <icon style="width: 10%" type='cancel' class="delete-btn" data-index="{{index}}" catchtap="deleteImg3">
                 </icon>
               </image>
             </view>
-          </view> -->
+          </view>
         </view>
         
 
